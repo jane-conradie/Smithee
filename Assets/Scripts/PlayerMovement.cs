@@ -1,31 +1,30 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
 
-   PlayerControls controls;
-   Vector2 moveInput;
+    PlayerControls controls;
+    Vector2 moveInput;
 
-   void Awake() 
-   {
+    void Awake()
+    {
         controls = new PlayerControls();
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
-   }
+    }
 
-    void OnEnable() 
+    void OnEnable()
     {
         controls.Player.Enable();
     }
 
-    void OnDisable() 
+    void OnDisable()
     {
         controls.Player.Disable();
     }
 
-    void Update() 
+    void Update()
     {
         Move();
     }
