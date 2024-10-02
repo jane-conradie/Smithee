@@ -9,6 +9,8 @@ public class QueueManager : MonoBehaviour
 
     List<Customer> customersInQueue = new List<Customer>();
 
+    ScoreKeeper scoreKeeper;
+
     void Awake()
     {
         if (instance != null)
@@ -23,6 +25,11 @@ public class QueueManager : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
+    void Start()
+    {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
+    }
+
     public void AddCustomerToQueue(Customer customer)
     {
         customersInQueue.Add(customer);
@@ -35,18 +42,17 @@ public class QueueManager : MonoBehaviour
 
     public void CheckoutCustomer()
     {
-        Debug.Log("checkout customer");
+        if (customersInQueue.Count > 0)
+        {
+            // add money
+            scoreKeeper.AddMoney();
 
-        // generate money score
+            // get first customer to leave, and queue to move up
+            Customer customer = customersInQueue[0];
+            customer.isWaiting = false;
 
-        // add money
-
-        // get first customer to leave, and queue to move up
-        Customer customer = customersInQueue[0];
-        customer.isWaiting = false;
-
-        // remove first customer from queue
-        customersInQueue.RemoveAt(0);
-
+            // remove first customer from queue
+            customersInQueue.RemoveAt(0);
+        }
     }
 }
