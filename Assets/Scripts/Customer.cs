@@ -13,19 +13,25 @@ public class Customer : MonoBehaviour
     public PathsSO path;
     List<Transform> waypoints;
     bool isMoving = false;
-    bool destinationReached = false;
+    //bool destinationReached = false;
     int waypointIndex = 0;
+
+    public QueueManager queueManager;
+
+    public bool isWaiting = false;
+    bool isAtRegister = false;
 
     void Start()
     {
         waypoints = path.GetWaypoints();
+        queueManager = QueueManager.instance;
     }
 
     void Update()
     {
         // move the object if it is not moving
         // and if the object is not at the final waypoint
-        if (!isMoving && !destinationReached)
+        if (!isMoving && !isWaiting)
         {
             StartCoroutine(MoveAlongPath());
         }
@@ -36,41 +42,55 @@ public class Customer : MonoBehaviour
     IEnumerator MoveAlongPath()
     {
         isMoving = true;
+        int customersInQueue = queueManager.GetTotalCustomersInQueue();
+
         Transform waypoint = waypoints[waypointIndex];
+        isAtRegister = waypoint.gameObject.tag == "Cash Register";
 
         Vector3 targetPosition = waypoint.position;
 
-        // moves the object until the target has been reached
-        while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
+        customersInQueue++;
+
+        // if on register waypoint
+        if (isAtRegister)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-            yield return null;
+            // calculate dist if customers in queue
+            // position * num customers in queue
+            targetPosition = new Vector3(waypoint.position.x, waypoint.position.y * customersInQueue, waypoint.position.z);
+        }
+
+        if (!isWaiting)
+        {
+            // moves the object until the target has been reached
+            while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+                yield return null;
+            }
         }
 
         if (waypoint.gameObject.tag == "Checkpoint")
         {
             // trigger buying of item
             BuyItem();
+            yield return new WaitForSecondsRealtime(3);
         }
 
-        // check if at last waypoint
-        if (waypoints.Count - 1 == waypointIndex)
+        // check if at register
+        if (isAtRegister)
         {
-            destinationReached = true;
-        }
-        else
-        {
-            waypointIndex++;
+            isWaiting = true;
+            queueManager.AddCustomerToQueue(this);
         }
 
+        if (waypoint == waypoints.Last())
+        {
+            Destroy(gameObject);
+        }
+
+        waypointIndex++;
         isMoving = false;
     }
-
-    // reach destination, buy item
-    // in love emojie on head
-    // move to cashier
-
-    // TO DO mood system that drains the longer the player takes to help them
 
     void BuyItem()
     {
@@ -103,11 +123,9 @@ public class Customer : MonoBehaviour
         // set the status holder to active
         statusHolder.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(3);
 
         statusHolder.SetActive(false);
-
-        yield return null;
     }
 
     Sprite GetRandomStatusSpriteBasedOnSentiment(string sentiment)
