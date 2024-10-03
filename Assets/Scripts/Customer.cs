@@ -21,11 +21,13 @@ public class Customer : MonoBehaviour
     public int waypointIndex = 0;
 
     public QueueManager queueManager;
+    public CustomerSpawner customerSpawner;
 
     void Start()
     {
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
+        customerSpawner = CustomerSpawner.instance;
     }
 
     void Update()
@@ -85,6 +87,7 @@ public class Customer : MonoBehaviour
 
         if (waypoint == waypoints.Last())
         {
+            customerSpawner.DespawnCustomer();
             Destroy(gameObject);
         }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
+    public static CustomerSpawner instance;
+
     [SerializeField] List<PathsSO> paths;
     [SerializeField] GameObject customerPrefab;
     [SerializeField] float moveSpeed = 2f;
@@ -13,14 +15,28 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] float maxSpawnTime = 6f;
 
     int customerLimit = 6;
-    int customersInStore = 0;
+    int totalCustomersInStore = 0;
     bool isSpawning = false;
+
+    void Start()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(instance);
+    }
 
     void Update()
     {
         // spawn a customer if the store limit has not been hit 
         // and if another customer spawn is not in progress
-        if ((customersInStore < customerLimit) && !isSpawning)
+        if ((totalCustomersInStore < customerLimit) && !isSpawning)
         {
             StartCoroutine(SpawnCustomer());
         }
@@ -31,7 +47,7 @@ public class CustomerSpawner : MonoBehaviour
     IEnumerator SpawnCustomer()
     {
         isSpawning = true;
-        customersInStore++;
+        totalCustomersInStore++;
 
         // wait before spawning the customer
         yield return new WaitForSecondsRealtime(Random.Range(minSpawnTime, maxSpawnTime));
@@ -59,9 +75,8 @@ public class CustomerSpawner : MonoBehaviour
         return paths[Random.Range(0, paths.Count)];
     }
 
-    void DespawnCustomer()
+    public void DespawnCustomer()
     {
-        // TO DO decrease customers in store when done
-        // destory customer
+        totalCustomersInStore--;
     }
 }
