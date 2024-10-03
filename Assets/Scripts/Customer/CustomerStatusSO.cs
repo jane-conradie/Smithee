@@ -25,6 +25,6 @@ public class CustomerStatusSO : ScriptableObject
 
     public Sprite GetRandomSprite()
     {
-        return sprites[Random.Range(0, sprites.Count)];
+        return sprites[Random.Range(0, sprites.Count - 1)];
     }
 }

@@ -57,13 +57,13 @@ public class QueueManager : MonoBehaviour
             Vector3 targetPosition = customer.transform.position;
 
             // trigger moving all customers forward in the queue
-            foreach (Customer item in customersInQueue)
+            foreach (Customer cust in customersInQueue)
             {
-                Vector3 temp = item.transform.position;
+                Vector3 tempPosition = cust.transform.position;
 
-                StartCoroutine(item.MoveForwardInQueue(targetPosition));
+                StartCoroutine(cust.MoveForwardInQueue(targetPosition));
 
-                targetPosition = temp;
+                targetPosition = tempPosition;
             }
         }
     }

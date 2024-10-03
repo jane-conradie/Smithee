@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     string interactable;
 
     QueueManager queueManager;
+    Minigame miniGame;
 
     void Awake()
     {
@@ -18,11 +20,14 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
         controls.Player.Interact.performed += ctx => Interact();
+
+        controls.Player.Click.performed += Click;
     }
 
     void Start()
     {
         queueManager = QueueManager.instance;
+        miniGame = FindObjectOfType<Minigame>();
     }
 
     void OnEnable()
@@ -55,26 +60,39 @@ public class PlayerMovement : MonoBehaviour
             case "Cash Register":
                 queueManager.CheckoutCustomer();
                 break;
+            case "Anvil":
+                miniGame.StartGame();
+                break;
             default:
                 break;
         }
     }
 
+    void Click(InputAction.CallbackContext context)
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            GameObject objectHit = hit.collider.gameObject;
+
+            // if clicked on a piece, trigger putting it back together
+            if (objectHit.tag == "Fixable Piece")
+            {
+                miniGame.FixPiece(objectHit);
+            }
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Cash Register")
-        {
-            // show action button
-            ToggleActionPrompt(other, true);
-        }
+        ToggleActionPrompt(other, true);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Cash Register")
-        {
-            ToggleActionPrompt(other, false);
-        }
+        ToggleActionPrompt(other, false);
     }
 
     void ToggleActionPrompt(Collider2D other, bool showAction)
@@ -87,6 +105,4 @@ public class PlayerMovement : MonoBehaviour
 
         interactable = showAction ? other.name : "";
     }
-
-
 }

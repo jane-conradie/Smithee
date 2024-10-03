@@ -72,7 +72,7 @@ public class CustomerSpawner : MonoBehaviour
     // returns a random path from the list of paths
     PathsSO GetRandomPath()
     {
-        return paths[Random.Range(0, paths.Count)];
+        return paths[Random.Range(0, paths.Count - 1)];
     }
 
     public void DespawnCustomer()
