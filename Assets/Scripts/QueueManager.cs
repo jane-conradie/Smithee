@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class QueueManager : MonoBehaviour
 {
-    // trigger customers moving when previous customer has been checked out
-
     public static QueueManager instance;
 
     List<Customer> customersInQueue = new List<Customer>();
@@ -44,15 +42,29 @@ public class QueueManager : MonoBehaviour
     {
         if (customersInQueue.Count > 0)
         {
-            // add money
-            scoreKeeper.AddMoney();
-
-            // get first customer to leave, and queue to move up
+            // let first customer leave
             Customer customer = customersInQueue[0];
             customer.isWaiting = false;
+            customer.waypointIndex++;
 
             // remove first customer from queue
             customersInQueue.RemoveAt(0);
+
+            // add money
+            scoreKeeper.AddMoney();
+
+            // track front customer position
+            Vector3 targetPosition = customer.transform.position;
+
+            // trigger moving all customers forward in the queue
+            foreach (Customer item in customersInQueue)
+            {
+                Vector3 temp = item.transform.position;
+
+                StartCoroutine(item.MoveForwardInQueue(targetPosition));
+
+                targetPosition = temp;
+            }
         }
     }
 }

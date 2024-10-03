@@ -7,19 +7,20 @@ public class Customer : MonoBehaviour
 {
     [SerializeField] List<CustomerStatusSO> statuses;
 
+    [SerializeField] float purchaseActionDuration = 3f;
+    [SerializeField] float statusDuration = 3f;
+
     public float moveSpeed;
 
     // pathfinding
     public PathsSO path;
     List<Transform> waypoints;
-    bool isMoving = false;
-    //bool destinationReached = false;
-    int waypointIndex = 0;
-
-    public QueueManager queueManager;
-
     public bool isWaiting = false;
     bool isAtRegister = false;
+    bool isMoving = false;
+    public int waypointIndex = 0;
+
+    public QueueManager queueManager;
 
     void Start()
     {
@@ -73,10 +74,9 @@ public class Customer : MonoBehaviour
         {
             // trigger buying of item
             BuyItem();
-            yield return new WaitForSecondsRealtime(3);
+            yield return new WaitForSecondsRealtime(purchaseActionDuration);
         }
 
-        // check if at register
         if (isAtRegister)
         {
             isWaiting = true;
@@ -88,7 +88,11 @@ public class Customer : MonoBehaviour
             Destroy(gameObject);
         }
 
-        waypointIndex++;
+        if (!isWaiting)
+        {
+            waypointIndex++;
+        }
+
         isMoving = false;
     }
 
@@ -123,7 +127,7 @@ public class Customer : MonoBehaviour
         // set the status holder to active
         statusHolder.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSecondsRealtime(statusDuration);
 
         statusHolder.SetActive(false);
     }
@@ -133,5 +137,14 @@ public class Customer : MonoBehaviour
         CustomerStatusSO status = statuses.FirstOrDefault((x) => x.GetSentiment() == sentiment);
 
         return status.GetRandomSprite();
+    }
+
+    public IEnumerator MoveForwardInQueue(Vector3 targetPosition)
+    {
+        while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+            yield return null;
+        }
     }
 }
