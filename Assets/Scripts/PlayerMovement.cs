@@ -3,17 +3,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
 
-    PlayerControls controls;
-    Vector2 moveInput;
+    private PlayerControls controls;
+    private Vector2 moveInput;
 
-    string interactable;
+    private string interactable;
 
-    QueueManager queueManager;
-    Minigame miniGame;
+    private QueueManager queueManager;
+    private Minigame miniGame;
 
-    void Awake()
+    private void Awake()
     {
         controls = new PlayerControls();
         controls.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
@@ -24,34 +24,34 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Click.performed += Click;
     }
 
-    void Start()
+    private void Start()
     {
         queueManager = QueueManager.instance;
         miniGame = FindObjectOfType<Minigame>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         controls.Player.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         controls.Player.Disable();
     }
 
-    void Update()
+    private void Update()
     {
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.deltaTime;
         transform.Translate(movement);
     }
 
-    void Interact()
+    private void Interact()
     {
         switch (interactable)
         {
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Click(InputAction.CallbackContext context)
+    private void Click(InputAction.CallbackContext context)
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.zero);
@@ -85,17 +85,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         ToggleActionPrompt(other, true);
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         ToggleActionPrompt(other, false);
     }
 
-    void ToggleActionPrompt(Collider2D other, bool showAction)
+    private void ToggleActionPrompt(Collider2D other, bool showAction)
     {
         // find canvas
         GameObject canvas = other.transform.Find("Canvas").gameObject;

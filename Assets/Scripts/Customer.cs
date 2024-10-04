@@ -5,32 +5,32 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] List<CustomerStatusSO> statuses;
+    [SerializeField] private List<CustomerStatusSO> statuses;
 
-    [SerializeField] float purchaseActionDuration = 3f;
-    [SerializeField] float statusDuration = 3f;
+    [SerializeField] private float purchaseActionDuration = 3f;
+    [SerializeField] private float statusDuration = 3f;
 
     public float moveSpeed;
 
     // pathfinding
     public PathsSO path;
-    List<Transform> waypoints;
+    private List<Transform> waypoints;
     public bool isWaiting = false;
-    bool isAtRegister = false;
-    bool isMoving = false;
+    private bool isAtRegister = false;
+    private bool isMoving = false;
     public int waypointIndex = 0;
 
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
 
-    void Start()
+    private void Start()
     {
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
     }
 
-    void Update()
+    private void Update()
     {
         // move the object if it is not moving
         // and if the object is not at the final waypoint
@@ -42,7 +42,7 @@ public class Customer : MonoBehaviour
 
     // moves a customer along their assigned path until destination has been reached
     // utilised Vector2.MoveTowards()
-    IEnumerator MoveAlongPath()
+    private IEnumerator MoveAlongPath()
     {
         isMoving = true;
         int customersInQueue = queueManager.GetTotalCustomersInQueue();
@@ -99,7 +99,7 @@ public class Customer : MonoBehaviour
         isMoving = false;
     }
 
-    void BuyItem()
+    private void BuyItem()
     {
         StartCoroutine(DisplayStatus("Positive"));
 
@@ -114,7 +114,7 @@ public class Customer : MonoBehaviour
         // TO DO
     }
 
-    IEnumerator DisplayStatus(string sentiment)
+    private IEnumerator DisplayStatus(string sentiment)
     {
         // get random positive sprite for status
         Sprite sprite = GetRandomStatusSpriteBasedOnSentiment(sentiment);
@@ -135,7 +135,7 @@ public class Customer : MonoBehaviour
         statusHolder.SetActive(false);
     }
 
-    Sprite GetRandomStatusSpriteBasedOnSentiment(string sentiment)
+    private Sprite GetRandomStatusSpriteBasedOnSentiment(string sentiment)
     {
         CustomerStatusSO status = statuses.FirstOrDefault((x) => x.GetSentiment() == sentiment);
 

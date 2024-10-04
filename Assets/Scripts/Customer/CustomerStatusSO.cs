@@ -4,9 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create New Customer Status", fileName = "Customer Status")]
 public class CustomerStatusSO : ScriptableObject
 {
-    [SerializeField] List<Sprite> sprites;
-    [SerializeField] string sentiment;
-    [SerializeField] string statusType;
+    [SerializeField] private List<Sprite> sprites;
+    [SerializeField] private string sentiment;
+    [SerializeField] private string statusType;
 
     public List<Sprite> GetSprites()
     {

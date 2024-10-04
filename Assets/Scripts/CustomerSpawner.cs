@@ -6,19 +6,19 @@ public class CustomerSpawner : MonoBehaviour
 {
     public static CustomerSpawner instance;
 
-    [SerializeField] List<PathsSO> paths;
-    [SerializeField] GameObject customerPrefab;
-    [SerializeField] float moveSpeed = 2f;
+    [SerializeField] private List<PathsSO> paths;
+    [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private float moveSpeed = 2f;
 
     // spawn control
-    [SerializeField] float minSpawnTime = 3f;
-    [SerializeField] float maxSpawnTime = 6f;
+    [SerializeField] private float minSpawnTime = 3f;
+    [SerializeField] private float maxSpawnTime = 6f;
 
-    int customerLimit = 6;
-    int totalCustomersInStore = 0;
-    bool isSpawning = false;
+    private int customerLimit = 6;
+    private int totalCustomersInStore = 0;
+    private bool isSpawning = false;
 
-    void Start()
+    private void Awake() 
     {
         if (instance != null)
         {
@@ -32,7 +32,7 @@ public class CustomerSpawner : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
-    void Update()
+    private void Update()
     {
         // spawn a customer if the store limit has not been hit 
         // and if another customer spawn is not in progress
@@ -44,7 +44,7 @@ public class CustomerSpawner : MonoBehaviour
 
     // spawns a customer prefab every random number of seconds
     // assigns a path and move speed to the instance of a customer
-    IEnumerator SpawnCustomer()
+    private IEnumerator SpawnCustomer()
     {
         isSpawning = true;
         totalCustomersInStore++;
@@ -70,7 +70,7 @@ public class CustomerSpawner : MonoBehaviour
     }
 
     // returns a random path from the list of paths
-    PathsSO GetRandomPath()
+    private PathsSO GetRandomPath()
     {
         return paths[Random.Range(0, paths.Count - 1)];
     }

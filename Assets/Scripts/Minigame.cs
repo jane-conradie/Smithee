@@ -6,23 +6,23 @@ using UnityEngine;
 
 public class Minigame : MonoBehaviour
 {
-    [SerializeField] List<GameObject> fixables;
+    [SerializeField] private List<GameObject> fixables;
 
     // limit for how far a piece can deviate on x and y axis
-    [SerializeField] float maxPositionDeviation = 3f;
-    [SerializeField] float minPositionDeviation = -3f;
+    [SerializeField] private float maxPositionDeviation = 3f;
+    [SerializeField] private float minPositionDeviation = -3f;
 
     // limit for piece rotation
-    [SerializeField] float maxRotationDeviation = 340f;
-    [SerializeField] float minRotationDeviation = -340f;
+    [SerializeField] private float maxRotationDeviation = 340f;
+    [SerializeField] private float minRotationDeviation = -340f;
 
     // movement speeds
-    [SerializeField] float pieceMoveSpeed = 4f;
-    [SerializeField] float pieceRotationSpeed = 70f;
+    [SerializeField] private float pieceMoveSpeed = 4f;
+    [SerializeField] private float pieceRotationSpeed = 70f;
 
-    bool isGameInProgress = false;
+    private bool isGameInProgress = false;
 
-    List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
+    private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
     public void StartGame()
     {
@@ -38,12 +38,12 @@ public class Minigame : MonoBehaviour
         }
     }
 
-    GameObject GetRandomFixable()
+    private GameObject GetRandomFixable()
     {
         return fixables[UnityEngine.Random.Range(0, fixables.Count - 1)];
     }
 
-    void SplitPieces(GameObject fixableObject)
+    private void SplitPieces(GameObject fixableObject)
     {
         // instantiate a fixable object
         GameObject fixable = Instantiate(fixableObject, new Vector3(0, 0, 0), quaternion.identity);
@@ -78,7 +78,7 @@ public class Minigame : MonoBehaviour
         }
     }
 
-    float GenerateRandomFloat(string type)
+    private float GenerateRandomFloat(string type)
     {
         float number;
 
@@ -104,7 +104,7 @@ public class Minigame : MonoBehaviour
         StartCoroutine(MoveToOriginalPosition(pieceObject, targetPosition));
     }
 
-    IEnumerator MoveToOriginalPosition(GameObject pieceObject, Vector2 targetPosition)
+    private IEnumerator MoveToOriginalPosition(GameObject pieceObject, Vector2 targetPosition)
     {
         Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
         // TO DO MAYBE? remove rotation to implement user having to rotate pieces
@@ -112,7 +112,7 @@ public class Minigame : MonoBehaviour
         while (Vector2.Distance(pieceObject.transform.position, targetPosition) > 0.01f || Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
         {
             // rotate the pieces back to original rotation
-            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
+            //pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
             // move the piece back to its original position
             pieceObject.transform.position = Vector2.MoveTowards(pieceObject.transform.position, targetPosition, Time.deltaTime * pieceMoveSpeed);
             yield return null;

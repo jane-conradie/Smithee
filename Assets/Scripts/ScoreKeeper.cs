@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreField;
+    [SerializeField] private TextMeshProUGUI scoreField;
 
-    float score = 0;
+    private float score = 0;
 
-    void Start()
+    private void Start()
     {
-        scoreField.text = "0";
+        scoreField.SetText("0");
     }
 
     public void AddMoney()
@@ -22,7 +22,7 @@ public class ScoreKeeper : MonoBehaviour
         UpdateScoreText();
     }
 
-    void UpdateScoreText()
+    private void UpdateScoreText()
     {
         scoreField.text = score.ToString();
     }

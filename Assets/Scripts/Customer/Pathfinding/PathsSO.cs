@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create New Path", fileName = "Path")]
 public class PathsSO : ScriptableObject
 {
-    [SerializeField] List<Transform> waypoints;
-    [SerializeField] string destination;
+    [SerializeField] private List<Transform> waypoints;
+    [SerializeField] private string destination;
 
     public List<Transform> GetWaypoints()
     {

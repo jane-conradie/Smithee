@@ -9,7 +9,7 @@ public class QueueManager : MonoBehaviour
 
     ScoreKeeper scoreKeeper;
 
-    void Awake()
+    private void Awake()
     {
         if (instance != null)
         {
@@ -23,7 +23,7 @@ public class QueueManager : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
-    void Start()
+    private void Start()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
