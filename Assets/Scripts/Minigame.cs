@@ -1,28 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class Minigame : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> fixables;
+    [SerializeField] private GameObject miniGamePrefab;
+    [SerializeField] private List<FixablesSO> fixables;
+    [SerializeField] private TMP_Text minigameText;
 
     // limit for how far a piece can deviate on x and y axis
     [SerializeField] private float maxPositionDeviation = 3f;
     [SerializeField] private float minPositionDeviation = -3f;
 
     // limit for piece rotation
-    [SerializeField] private float maxRotationDeviation = 340f;
-    [SerializeField] private float minRotationDeviation = -340f;
+    [SerializeField] private float maxRotationDeviation = 360f;
+    [SerializeField] private float minRotationDeviation = -360f;
 
     // movement speeds
-    [SerializeField] private float pieceMoveSpeed = 4f;
-    [SerializeField] private float pieceRotationSpeed = 70f;
+    [SerializeField] private float pieceMoveSpeed = 10f;
+    [SerializeField] private float pieceRotationSpeed = 260f;
+    [SerializeField] private float singleRotationAmount = -90f;
+
+    float numberOfPiecesToRotateCorrectly;
 
     private bool isGameInProgress = false;
 
     private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
+
+    GameObject minigame;
+    GameObject fixableObject;
 
     public void StartGame()
     {
@@ -30,33 +39,40 @@ public class Minigame : MonoBehaviour
         {
             isGameInProgress = true;
 
-            // choose a random object to fix
-            GameObject fixableObject = GetRandomFixable();
+            // instantiate a mini game
+            minigame = Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
 
+            // choose a random object to fix
+            FixablesSO fixableObject = GetRandomFixable();
             // split pieces apart
             SplitPieces(fixableObject);
         }
     }
 
-    private GameObject GetRandomFixable()
+    private FixablesSO GetRandomFixable()
     {
         return fixables[UnityEngine.Random.Range(0, fixables.Count - 1)];
     }
 
-    private void SplitPieces(GameObject fixableObject)
+    private void SplitPieces(FixablesSO fixable)
     {
+        // get the prefab to split apart
+        GameObject fixableToBreak = fixable.GetFixablePrefab();
+
         // instantiate a fixable object
-        GameObject fixable = Instantiate(fixableObject, new Vector3(0, 0, 0), quaternion.identity);
+        fixableObject = Instantiate(fixableToBreak, fixableToBreak.transform.position, quaternion.identity);
 
         // get all the children objects, exclude the parent
-        Transform[] pieces = fixable.GetComponentsInChildren<Transform>(true)
-            .Where(component => component.gameObject != fixable.gameObject)
+        Transform[] pieces = fixableObject.GetComponentsInChildren<Transform>(true)
+            .Where(component => component.gameObject != fixableObject.gameObject)
             .ToArray(); ;
+
+        numberOfPiecesToRotateCorrectly = pieces.Count();
 
         // for each piece
         // save the original transform
         // place at a new transform
-        for (int i = 0; i < pieces.Count(); i++)
+        for (int i = 0; i < numberOfPiecesToRotateCorrectly; i++)
         {
             // set the gameobject id
             Piece piece = pieces[i].gameObject.GetComponent<Piece>();
@@ -88,7 +104,10 @@ public class Minigame : MonoBehaviour
         }
         else
         {
-            number = UnityEngine.Random.Range(minRotationDeviation, maxRotationDeviation);
+            // choose a random number to dictate the amount of degrees to rotate the piece
+            // this limits a user to only having to spin 1 - 3 times
+            float optionNumber = UnityEngine.Random.Range(1, 3);
+            number = optionNumber * singleRotationAmount;
         }
 
         return number;
@@ -101,21 +120,68 @@ public class Minigame : MonoBehaviour
         // look for piece in original position
         Vector2 targetPosition = originalPositions.FirstOrDefault((x) => x.id == piece.id).originalPosition;
 
-        StartCoroutine(MoveToOriginalPosition(pieceObject, targetPosition));
+        if (!piece.isInPosition)
+        {
+            StartCoroutine(MoveToOriginalPosition(pieceObject, targetPosition, piece));
+        } 
+        else if (!piece.isInCorrectRotation && !piece.isRotating)
+        {
+            StartCoroutine(RotatePiece(pieceObject, piece));
+        }
     }
 
-    private IEnumerator MoveToOriginalPosition(GameObject pieceObject, Vector2 targetPosition)
+    private IEnumerator MoveToOriginalPosition(GameObject pieceObject, Vector2 targetPosition, Piece piece)
     {
-        Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
-        // TO DO MAYBE? remove rotation to implement user having to rotate pieces
+        piece.isInPosition = true;
 
-        while (Vector2.Distance(pieceObject.transform.position, targetPosition) > 0.01f || Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+        while (Vector2.Distance(pieceObject.transform.position, targetPosition) > 0.01f)
         {
-            // rotate the pieces back to original rotation
-            //pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
             // move the piece back to its original position
             pieceObject.transform.position = Vector2.MoveTowards(pieceObject.transform.position, targetPosition, Time.deltaTime * pieceMoveSpeed);
             yield return null;
         }
+    }
+
+    private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
+    {
+        piece.isRotating = true;
+
+        Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
+
+        Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
+
+        while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+        {
+            // rotate piece to target rotation
+            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);            
+            yield return null;
+        }
+
+        piece.isRotating = false;
+
+        // if piece rotation matches correct rotatiom
+        // mark as in correct rotation
+        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.01f)
+        {
+            piece.isInCorrectRotation = true;
+            numberOfPiecesToRotateCorrectly--;
+        }
+
+        if (numberOfPiecesToRotateCorrectly == 0)
+        {
+            StartCoroutine(EndMiniGame());
+        }
+    }
+
+    private IEnumerator EndMiniGame()
+    {
+        // change text to tell user game is done
+
+
+        yield return new WaitForSecondsRealtime(5);
+
+        // end minigame, whooo hooo
+        Destroy(minigame);
     }
 }
