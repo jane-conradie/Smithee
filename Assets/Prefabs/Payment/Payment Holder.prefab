@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 239491210310133979}
   - component: {fileID: 6599365040633066172}
   - component: {fileID: 858054155351065059}
+  - component: {fileID: 1458266637315929542}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1458266637315929542
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597234537560120971}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3558080554454615723
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +143,9 @@ Transform:
   m_LocalPosition: {x: -942.35156, y: -636.6467, z: 1.4009413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5558387175876583203}
+  - {fileID: 1098893704200295303}
   m_Father: {fileID: 929997057168748783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7802044306894336115
@@ -293,15 +308,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7954517473044531014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3137617}
+  m_LocalPosition: {x: 0, y: 0, z: -0.08717954}
   m_LocalScale: {x: 0.66412, y: 0.66412, z: 0.66412}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 929997057168748783}
+  m_Father: {fileID: 7098629116907770040}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -240.45154, y: 112.753296}
+  m_AnchoredPosition: {x: 701.9, y: 749.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1793766896239629840
@@ -390,8 +405,10 @@ MonoBehaviour:
   basePaymentText: {fileID: 3427214568685702816}
   tipText: {fileID: 1300560307480954386}
   textContainer: {fileID: 929997057168748783}
+  canvas: {fileID: 1458266637315929542}
   fadeDuration: 2
-  fadeSpeed: 100
+  moveSpeed: 100
+  fadeSpeed: 0.8
 --- !u!1 &8314227729488779177
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,8 +439,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7098629116907770040}
-  - {fileID: 5558387175876583203}
-  - {fileID: 1098893704200295303}
   - {fileID: 1900356618313505443}
   - {fileID: 6788896390942469640}
   m_Father: {fileID: 4186260605460553226}
@@ -524,6 +539,14 @@ PrefabInstance:
       propertyPath: m_text
       value: 00
       objectReference: {fileID: 0}
+    - target: {fileID: 6289398580842344996, guid: 89bf1b40d7388324c839c630f070c3f7, type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289398580842344996, guid: 89bf1b40d7388324c839c630f070c3f7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -551,7 +574,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 929997057168748783}
+    m_TransformParent: {fileID: 7098629116907770040}
     m_Modifications:
     - target: {fileID: 6249235345193690960, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_text
@@ -603,7 +626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8536108078769011319, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.3137617
+      value: -0.08717954
       objectReference: {fileID: 0}
     - target: {fileID: 8536108078769011319, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -623,11 +646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8536108078769011319, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -86.95154
+      value: 855.4
       objectReference: {fileID: 0}
     - target: {fileID: 8536108078769011319, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 113.15332
+      value: 749.80005
       objectReference: {fileID: 0}
     - target: {fileID: 8536108078769011319, guid: d27e329139570d0409e1d8fbe04c7cd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

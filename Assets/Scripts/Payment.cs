@@ -8,9 +8,11 @@ public class Payment : MonoBehaviour
    [SerializeField] private TextMeshProUGUI tipText;
 
    [SerializeField] private Transform textContainer;
+   [SerializeField] private CanvasGroup canvas;
 
    [SerializeField] private float fadeDuration = 2f;
-   [SerializeField] private float fadeSpeed = 100f;
+   [SerializeField] private float moveSpeed = 100f;
+   [SerializeField] private float fadeSpeed = 5f;
 
    private void Start()
    {
@@ -29,17 +31,27 @@ public class Payment : MonoBehaviour
         // store the initial position
         Vector3 initialPosition = textContainer.transform.position; 
 
+        float startAlpha = canvas.alpha;
+        float targetAlpha = 0f;
+
         while (elapsedTime < fadeDuration)
         {
             // move the object upwards
-            textContainer.transform.position = initialPosition + Vector3.up * (elapsedTime * fadeSpeed);
+            textContainer.transform.position = initialPosition + Vector3.up * (elapsedTime * moveSpeed);
+
+            // fade on alpha
+            canvas.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime * fadeSpeed);
+
             // increase elapsed time
             elapsedTime += Time.deltaTime; 
             yield return null;
         }
 
-        // // set final position
-        transform.position = initialPosition + Vector3.up * (fadeDuration * fadeSpeed);
+        // set final position
+        transform.position = initialPosition + Vector3.up * (fadeDuration * moveSpeed);
+
+        // set final alpha
+        canvas.alpha = targetAlpha;
 
         // destroy
         Destroy(gameObject);
