@@ -9,21 +9,26 @@ public class Minigame : MonoBehaviour
 {
     [SerializeField] private GameObject miniGamePrefab;
     [SerializeField] private List<FixablesSO> fixables;
-    [SerializeField] private TMP_Text minigameText;
+    //[SerializeField] private TMP_Text minigameText;
+    [SerializeField] private Canvas minigameCanvas;
+    [SerializeField] private Camera mainCamera;
 
+    [SerializeField] private TextMeshProUGUI minigameText;
+    
     // limit for how far a piece can deviate on x and y axis
-    [SerializeField] private float maxPositionDeviation = 3f;
-    [SerializeField] private float minPositionDeviation = -3f;
+    [SerializeField] private float minPositionDeviation = -1.5f;
+    [SerializeField] private float maxPositionDeviationX = 5f;
+    [SerializeField] private float maxPositionDeviationY = 1.5f;
 
     // limit for piece rotation
     [SerializeField] private float maxRotationDeviation = 360f;
     [SerializeField] private float minRotationDeviation = -360f;
+    [SerializeField] private float singleRotationAmount = -90f;
 
     // movement speeds
     [SerializeField] private float pieceMoveSpeed = 10f;
     [SerializeField] private float pieceRotationSpeed = 260f;
-    [SerializeField] private float singleRotationAmount = -90f;
-
+    
     float numberOfPiecesToRotateCorrectly;
 
     private bool isGameInProgress = false;
@@ -33,19 +38,33 @@ public class Minigame : MonoBehaviour
     GameObject minigame;
     GameObject fixableObject;
 
+    QueueManager queueManager;
+
+    private void Start() 
+    {
+        queueManager = QueueManager.instance;
+    }
+
     public void StartGame()
     {
         if (!isGameInProgress)
         {
+            minigameText.text = "Click on the pieces until it matches the image on the left";
+
             isGameInProgress = true;
 
             // instantiate a mini game
             minigame = Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
 
+            // assign a camera to the canvas since it is in world space
+            minigameCanvas.worldCamera = mainCamera;
+
             // choose a random object to fix
             FixablesSO fixableObject = GetRandomFixable();
             // split pieces apart
             SplitPieces(fixableObject);
+
+            //minigameText.SetText("ummm lliterally what is happening??");
         }
     }
 
@@ -84,9 +103,11 @@ public class Minigame : MonoBehaviour
             Vector2 originalPosition = new Vector2(piecePosition.x, piecePosition.y);
             originalPositions.Add((i, originalPosition));
 
+            float xPos = GenerateRandomFloat("Position", true);
+
             // generate a new position and new rotation for the piece
-            Vector3 newPosition = new Vector3(GenerateRandomFloat("Position"), GenerateRandomFloat("Position"), 0);
-            Vector3 newRotation = new Vector3(0, 0, GenerateRandomFloat("Rotation"));
+            Vector3 newPosition = new Vector3(xPos, GenerateRandomFloat("Position", false), 0);
+            Vector3 newRotation = new Vector3(0, 0, GenerateRandomFloat("Rotation", false));
 
             // place piece at new position and rotation
             pieces[i].position = newPosition;
@@ -94,13 +115,20 @@ public class Minigame : MonoBehaviour
         }
     }
 
-    private float GenerateRandomFloat(string type)
+    private float GenerateRandomFloat(string type, bool isForXAxis)
     {
         float number;
 
         if (type == "Position")
         {
-            number = UnityEngine.Random.Range(minPositionDeviation, maxPositionDeviation);
+            if (!isForXAxis)
+            {
+                number = UnityEngine.Random.Range(minPositionDeviation, maxPositionDeviationY);
+            }
+            else
+            {
+                number = UnityEngine.Random.Range(minPositionDeviation, maxPositionDeviationX);
+            }
         }
         else
         {
@@ -177,7 +205,10 @@ public class Minigame : MonoBehaviour
     private IEnumerator EndMiniGame()
     {
         // change text to tell user game is done
-
+        //minigameText.SetText("Done!");
+        // TO DO MAKE THIS WORK WITH .SET TEXT()
+        //minigameText.text = "Done!";
+        minigameText.text = "Done!";
 
         yield return new WaitForSecondsRealtime(5);
 

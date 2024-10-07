@@ -50,8 +50,12 @@ public class QueueManager : MonoBehaviour
             // remove first customer from queue
             customersInQueue.RemoveAt(0);
 
+            // calculate customer payment
+            float payment = customer.GetBasePayment();
+            float tip = customer.CalculateCustomerPayment();
+            
             // add money
-            scoreKeeper.AddMoney();
+            scoreKeeper.AddMoney(payment, tip);
 
             // track front customer position
             Vector3 targetPosition = customer.transform.position;

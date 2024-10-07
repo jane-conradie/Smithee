@@ -1,9 +1,13 @@
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreField;
+
+    [SerializeField] private Transform paymentHolderPrefab;
+    // TO DO - CHANGE TO TMP_TEXT AND USE SET TEXT
 
     private float score = 0;
 
@@ -12,12 +16,16 @@ public class ScoreKeeper : MonoBehaviour
         scoreField.SetText("0");
     }
 
-    public void AddMoney()
+    public void AddMoney(float payment, float tip)
     {
-        // TO DO generate amount based on what was bought/done
-        // temp add 10
+        // add payment
+        score += payment + tip;
 
-        score += 10;
+        // instantiate payment holder
+        Transform paymentHolder = Instantiate(paymentHolderPrefab, paymentHolderPrefab.transform.position, quaternion.identity);
+        // display payment for user
+        Payment paymentObject = paymentHolder.GetComponent<Payment>();
+        paymentObject.UpdateDisplay(payment, tip);
 
         UpdateScoreText();
     }

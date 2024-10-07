@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1318431549618091769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.013, y: 0.988, z: 0.070207685}
+  m_LocalPosition: {x: -1.013, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1486685934, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -171,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 2774607735482185029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0.989, z: 0.070207685}
+  m_LocalPosition: {x: -0.02, y: 0.989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -216,8 +216,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: -966672288, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -314,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 3147911874105835013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.98, y: 0.988, z: 0.070207685}
+  m_LocalPosition: {x: 0.98, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -359,8 +359,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1310756457, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -457,7 +457,7 @@ Transform:
   m_GameObject: {fileID: 4251752305673039694}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.012, y: -0.009, z: 0.070207685}
+  m_LocalPosition: {x: -1.012, y: -0.009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -502,8 +502,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1602290492, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -600,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 4706205125358192639}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.986, y: -0.01, z: 0.070207685}
+  m_LocalPosition: {x: 0.986, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -645,8 +645,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: -802462686, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -743,7 +743,7 @@ Transform:
   m_GameObject: {fileID: 5485575538062182673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.014, y: -0.011, z: 0.070207685}
+  m_LocalPosition: {x: -0.014, y: -0.011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -788,8 +788,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 65331577
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayer: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1357095332, guid: 7145b6352ecbf7744bab445c20603dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

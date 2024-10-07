@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,19 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     [SerializeField] private List<CustomerStatusSO> statuses;
-
     [SerializeField] private float purchaseActionDuration = 3f;
     [SerializeField] private float statusDuration = 3f;
+
+    // customer mood and tipping
+    [Header("Customer Mood and Payment")]
+    [SerializeField] private float tipAmount = 0.20f;
+    [SerializeField] private float moodScore = 100f;
+    [SerializeField] private float moodIncreasePerAction = 20f;
+    [SerializeField] private float moodDecreasePerSecond = 0.05f;
+    [SerializeField] private float baseProductCost = 10f;
+    [SerializeField] private float baseServiceCost = 20f;
+    [SerializeField] private SpriteRenderer moodSprite;
+    [SerializeField] private MoodSO[] moods;
 
     public float moveSpeed;
 
@@ -19,6 +30,7 @@ public class Customer : MonoBehaviour
     private bool isAtRegister = false;
     private bool isMoving = false;
     public int waypointIndex = 0;
+
 
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
@@ -38,6 +50,11 @@ public class Customer : MonoBehaviour
         {
             StartCoroutine(MoveAlongPath());
         }
+
+        DecreaseMood();
+
+        // only update if mood has changed by a lot
+        UpdateMoodDisplayed();
     }
 
     // moves a customer along their assigned path until destination has been reached
@@ -107,8 +124,6 @@ public class Customer : MonoBehaviour
 
         // TO DO grabbing animation
 
-        // TO DO move to cashier
-
         // TO DO pay status
 
         // TO DO
@@ -149,5 +164,49 @@ public class Customer : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
             yield return null;
         }
+    }
+
+    private void DecreaseMood()
+    {
+        if (isAtRegister && moodScore != 0)
+        {
+            moodScore -= moodDecreasePerSecond;
+        }
+    }
+
+    private void IncreaseMood()
+    {
+        moodScore += moodIncreasePerAction;
+    }
+
+    private void UpdateMoodDisplayed()
+    {
+        // get sprite for customer mood
+        Sprite sprite = GetSpriteForMoodLevel();
+
+        // update the sprite
+        moodSprite.sprite = sprite;
+    }
+
+    private Sprite GetSpriteForMoodLevel()
+    {
+        MoodSO mood = moods.FirstOrDefault((x) => moodScore <= x.GetScore());
+        Sprite sprite = mood.GetSprite();
+
+        return sprite;
+    }
+
+    public float CalculateCustomerPayment()
+    {   
+        // takes customer mood, base product amount (paymentOwed), and customer tip amount
+        // to calculate a final payment at checkout
+        double payment = Math.Floor(tipAmount * moodScore);
+
+        return (float)payment;
+    }
+
+    public float GetBasePayment()
+    {
+        return baseProductCost;
     }
 }
