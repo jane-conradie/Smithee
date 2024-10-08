@@ -27,7 +27,7 @@ public class Customer : MonoBehaviour
     public PathsSO path;
     private List<Transform> waypoints;
     public bool isWaiting = false;
-    private bool isAtRegister = false;
+    public bool isAtRegister = false;
     private bool isMoving = false;
     public int waypointIndex = 0;
 
@@ -51,7 +51,11 @@ public class Customer : MonoBehaviour
             StartCoroutine(MoveAlongPath());
         }
 
-        DecreaseMood();
+        if (moodScore > 0)
+        {
+            DecreaseMood();
+        }
+
 
         // only update if mood has changed by a lot
         UpdateMoodDisplayed();
@@ -93,7 +97,10 @@ public class Customer : MonoBehaviour
         {
             // trigger buying of item
             BuyItem();
-            yield return new WaitForSecondsRealtime(purchaseActionDuration);
+
+            // wait for waiting to change
+            // this will change in response to player interaction
+            yield return new WaitUntil(() => !isWaiting);
         }
 
         if (isAtRegister)
@@ -104,7 +111,6 @@ public class Customer : MonoBehaviour
 
         if (waypoint == waypoints.Last())
         {
-            customerSpawner.DespawnCustomer();
             Destroy(gameObject);
         }
 
@@ -120,13 +126,16 @@ public class Customer : MonoBehaviour
     {
         StartCoroutine(DisplayStatus("Positive"));
 
+        // set status to waiting
+        isWaiting = true;
+
         // TO DO grabbing sound
 
         // TO DO grabbing animation
 
         // TO DO pay status
 
-        // TO DO
+
     }
 
     private IEnumerator DisplayStatus(string sentiment)
@@ -168,9 +177,14 @@ public class Customer : MonoBehaviour
 
     private void DecreaseMood()
     {
-        if (isAtRegister && moodScore != 0)
+        if (isWaiting)
         {
             moodScore -= moodDecreasePerSecond;
+
+            if (moodScore < 0)
+            {
+                moodScore = 0;
+            }
         }
     }
 
@@ -197,7 +211,7 @@ public class Customer : MonoBehaviour
     }
 
     public float CalculateCustomerPayment()
-    {   
+    {
         // takes customer mood, base product amount (paymentOwed), and customer tip amount
         // to calculate a final payment at checkout
         double payment = Math.Floor(tipAmount * moodScore);
@@ -208,5 +222,20 @@ public class Customer : MonoBehaviour
     public float GetBasePayment()
     {
         return baseProductCost;
+    }
+
+    public void RemovePath()
+    {
+        path.SetIsInUse(false);
+    }
+
+    public void HelpCustomer()
+    {
+        // add tip based on customer mood
+
+        // increase mood
+
+        // set waiting false
+        isWaiting = false;
     }
 }

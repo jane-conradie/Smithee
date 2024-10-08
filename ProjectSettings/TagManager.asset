@@ -8,6 +8,7 @@ TagManager:
   - Cash Register
   - Anvil
   - Fixable Piece
+  - Customer
   layers:
   - Default
   - TransparentFX

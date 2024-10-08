@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create New Path", fileName = "Path")]
 public class PathsSO : ScriptableObject
 {
+    [SerializeField] private float id;
     [SerializeField] private List<Transform> waypoints;
-    [SerializeField] private string destination;
+    [SerializeField] public bool isInUse;
 
     public List<Transform> GetWaypoints()
     {
@@ -15,5 +16,10 @@ public class PathsSO : ScriptableObject
     public Transform GetSpawnPoint()
     {
         return waypoints[0];
+    }
+
+    public void SetIsInUse(bool isPathInUse)
+    {
+        isInUse = isPathInUse;
     }
 }

@@ -44,6 +44,11 @@ public class QueueManager : MonoBehaviour
         {
             // let first customer leave
             Customer customer = customersInQueue[0];
+
+            // remove path tied to customer
+            customer.RemovePath();
+
+            // trigger moving
             customer.isWaiting = false;
             customer.waypointIndex++;
 
@@ -53,7 +58,7 @@ public class QueueManager : MonoBehaviour
             // calculate customer payment
             float payment = customer.GetBasePayment();
             float tip = customer.CalculateCustomerPayment();
-            
+
             // add money
             scoreKeeper.AddMoney(payment, tip);
 

@@ -6,19 +6,20 @@ public class CustomerSpawner : MonoBehaviour
 {
     public static CustomerSpawner instance;
 
-    [SerializeField] private List<PathsSO> paths;
+    //[SerializeField] private List<PathsSO> paths;
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private float moveSpeed = 2f;
 
     // spawn control
-    [SerializeField] private float minSpawnTime = 3f;
-    [SerializeField] private float maxSpawnTime = 6f;
+    [SerializeField] private float minSpawnTime = 1f;
+    [SerializeField] private float maxSpawnTime = 3f;
 
-    private int customerLimit = 6;
-    private int totalCustomersInStore = 0;
+    private bool canSpawn = true;
     private bool isSpawning = false;
 
-    private void Awake() 
+    PathManager pathManager;
+
+    private void Awake()
     {
         if (instance != null)
         {
@@ -32,11 +33,17 @@ public class CustomerSpawner : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
+    private void Start()
+    {
+        pathManager = PathManager.instance;
+    }
+
     private void Update()
     {
-        // spawn a customer if the store limit has not been hit 
-        // and if another customer spawn is not in progress
-        if ((totalCustomersInStore < customerLimit) && !isSpawning)
+        canSpawn = pathManager.GetNumberOfAvailablePaths() > 0;
+
+        // spawn customer if there is an available path to take
+        if (canSpawn && !isSpawning)
         {
             StartCoroutine(SpawnCustomer());
         }
@@ -47,13 +54,12 @@ public class CustomerSpawner : MonoBehaviour
     private IEnumerator SpawnCustomer()
     {
         isSpawning = true;
-        totalCustomersInStore++;
 
         // wait before spawning the customer
         yield return new WaitForSecondsRealtime(Random.Range(minSpawnTime, maxSpawnTime));
 
         // randomise path
-        PathsSO path = GetRandomPath();
+        PathsSO path = pathManager.GetRandomAvailablePath();
 
         // use prefab and spawn a customer at their path spawn point
         GameObject instance = Instantiate(customerPrefab, path.GetSpawnPoint().transform.position, Quaternion.identity);
@@ -67,16 +73,5 @@ public class CustomerSpawner : MonoBehaviour
         isSpawning = false;
 
         yield return null;
-    }
-
-    // returns a random path from the list of paths
-    private PathsSO GetRandomPath()
-    {
-        return paths[Random.Range(0, paths.Count - 1)];
-    }
-
-    public void DespawnCustomer()
-    {
-        totalCustomersInStore--;
     }
 }

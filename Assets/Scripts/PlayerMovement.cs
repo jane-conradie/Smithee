@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool controlsEnabled = true;
 
+    Customer customerCollidingWith;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -71,6 +73,9 @@ public class PlayerMovement : MonoBehaviour
                     miniGame.StartGame();
                     controlsEnabled = false;
                     break;
+                case "Customer":
+                    customerCollidingWith.HelpCustomer();
+                    break;
                 default:
                     break;
             }
@@ -106,13 +111,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void ToggleActionPrompt(Collider2D other, bool showAction)
     {
+        // TO DO FIX THIS DO NOT DO TRANSFORM FIND
         // find canvas
         GameObject canvas = other.transform.Find("Canvas").gameObject;
+
+        if (other.tag == "Customer")
+        {
+            // get customer object
+            Customer customer = other.gameObject.GetComponent<Customer>();
+            customerCollidingWith = customer;
+
+            // if at register or walking, do not show canvas
+            if (customer.isAtRegister || !customer.isWaiting)
+            {
+                showAction = false;
+            }
+        }
 
         // set canvas active/not active
         canvas.SetActive(showAction);
 
-        interactable = showAction ? other.name : "";
+        interactable = showAction ? other.tag : "";
     }
 
     public void ToggleControlsOnOrOff(bool isEnabled)
