@@ -31,15 +31,20 @@ public class Customer : MonoBehaviour
     private bool isMoving = false;
     public int waypointIndex = 0;
 
+    public bool isAtAnvil = false;
+
 
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
+
+    private Minigame miniGame;
 
     private void Start()
     {
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
+        miniGame = FindObjectOfType<Minigame>();
     }
 
     private void Update()
@@ -93,7 +98,7 @@ public class Customer : MonoBehaviour
             }
         }
 
-        if (waypoint.gameObject.tag == "Checkpoint")
+        if (waypoint.gameObject.tag == "Checkpoint" || waypoint.gameObject.tag == "Anvil")
         {
             // trigger buying of item
             BuyItem();
@@ -231,6 +236,14 @@ public class Customer : MonoBehaviour
 
     public void HelpCustomer()
     {
+        // if at anvil, trigger minigame
+        if (isAtAnvil)
+        {
+            miniGame.StartGame();
+        }
+
+        // else help at product
+
         // add tip based on customer mood
 
         // increase mood

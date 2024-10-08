@@ -163,7 +163,6 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
     {
-        Debug.Log("rotate piece");
         piece.isRotating = true;
 
         Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
@@ -187,8 +186,6 @@ public class Minigame : MonoBehaviour
             piece.isInCorrectRotation = true;
             numberOfPiecesToRotateCorrectly--;
         }
-
-        Debug.Log(numberOfPiecesToRotateCorrectly);
 
         if (numberOfPiecesToRotateCorrectly == 0)
         {

@@ -4704,6 +4704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7485e9632a0c54a90d8342f780bf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigameLayer:
+    serializedVersion: 2
+    m_Bits: 64
   moveSpeed: 5
   controlsEnabled: 1
 --- !u!114 &1676529348
@@ -5094,8 +5097,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1770466473
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -5544,6 +5547,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703864877410666634, guid: 95980762bd1242a4d95d92ff25f9a727, type: 3}
       propertyPath: m_Name
+      value: Anvil
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703864877410666634, guid: 95980762bd1242a4d95d92ff25f9a727, type: 3}
+      propertyPath: m_TagString
       value: Anvil
       objectReference: {fileID: 0}
     m_RemovedComponents: []

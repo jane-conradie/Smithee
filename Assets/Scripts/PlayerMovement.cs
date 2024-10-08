@@ -3,17 +3,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private LayerMask minigameLayer;
     [SerializeField] private float moveSpeed = 5f;
 
     private PlayerControls controls;
     private Vector2 moveInput;
+    public bool controlsEnabled = true;
 
     private string interactable;
 
     private QueueManager queueManager;
     private Minigame miniGame;
 
-    public bool controlsEnabled = true;
+
 
     Customer customerCollidingWith;
 
@@ -74,6 +76,10 @@ public class PlayerMovement : MonoBehaviour
                     controlsEnabled = false;
                     break;
                 case "Customer":
+                    if (customerCollidingWith.isAtAnvil)
+                    {
+                        controlsEnabled = false;
+                    }
                     customerCollidingWith.HelpCustomer();
                     break;
                 default:
@@ -84,8 +90,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Click(InputAction.CallbackContext context)
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.zero);
+        Vector2 mousePosition = Mouse.current.position.ReadValue(); ;
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.down, 0, minigameLayer);
 
         if (hit.collider != null)
         {
