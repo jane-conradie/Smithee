@@ -20,6 +20,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float baseServiceCost = 20f;
     [SerializeField] private SpriteRenderer moodSprite;
     [SerializeField] private MoodSO[] moods;
+    private float bonusTip = 0f;
 
     public float moveSpeed;
 
@@ -196,6 +197,11 @@ public class Customer : MonoBehaviour
     private void IncreaseMood()
     {
         moodScore += moodIncreasePerAction;
+
+        if (moodScore > 100)
+        {
+            moodScore = 100;
+        }
     }
 
     private void UpdateMoodDisplayed()
@@ -242,11 +248,11 @@ public class Customer : MonoBehaviour
             miniGame.StartGame();
         }
 
-        // else help at product
+        // TO DO add tip based on how fast finished minigame
 
-        // add tip based on customer mood
 
         // increase mood
+        IncreaseMood();
 
         // set waiting false
         isWaiting = false;

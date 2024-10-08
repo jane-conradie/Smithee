@@ -56,6 +56,8 @@ public class Minigame : MonoBehaviour
             FixablesSO fixableObject = GetRandomFixable();
             // split pieces apart
             SplitPieces(fixableObject);
+
+            // TO DO - start timer
         }
     }
 
