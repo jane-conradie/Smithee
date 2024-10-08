@@ -4091,6 +4091,7 @@ MonoBehaviour:
   miniGamePrefab: {fileID: 7105263191725633480, guid: b63c5a11cc0298b4ab5b2bb4c6bae485, type: 3}
   fixables:
   - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
+  - {fileID: 11400000, guid: 7c9bfb94aa983db4e9e3f291d28dcbc4, type: 2}
   minPositionDeviation: -1.5
   maxPositionDeviationX: 5
   maxPositionDeviationY: 1.5

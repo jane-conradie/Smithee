@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigameText: {fileID: 4132181277414356614}
+  image: {fileID: 6310548106737534700}
 --- !u!1001 &8517493367494098176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,40 +139,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minigame Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 8704236317660278496, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
-      propertyPath: m_BlockingObjects
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8704236317660278496, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
-      propertyPath: m_BlockingMask.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7802818080475415436, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2216407055850131123}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
---- !u!1 &1908711112770109068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7802818080475415436, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
-  m_PrefabInstance: {fileID: 8517493367494098176}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2216407055850131123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908711112770109068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b3c4df164e42142aeda654c2fe3575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 8868839147042424583}
 --- !u!114 &4132181277414356614 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5723023914116205446, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
@@ -183,11 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &8868839147042424583 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 945831925551069703, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+--- !u!114 &6310548106737534700 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2425088372002388972, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
   m_PrefabInstance: {fileID: 8517493367494098176}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9117788950462652800 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 629610771188669568, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}

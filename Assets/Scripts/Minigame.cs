@@ -57,13 +57,16 @@ public class Minigame : MonoBehaviour
             // split pieces apart
             SplitPieces(fixableObject);
 
+            // set example image
+            minigameManager.UpdateExampleSprite(fixableObject.GetFixableSprite());
+
             // TO DO - start timer
         }
     }
 
     private FixablesSO GetRandomFixable()
     {
-        return fixables[UnityEngine.Random.Range(0, fixables.Count - 1)];
+        return fixables[UnityEngine.Random.Range(0, fixables.Count)];
     }
 
     private void SplitPieces(FixablesSO fixable)

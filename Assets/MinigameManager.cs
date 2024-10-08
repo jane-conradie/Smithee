@@ -1,10 +1,12 @@
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MinigameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI minigameText;
+
+    [SerializeField] private Image image;
 
     private void Start()
     {
@@ -14,5 +16,10 @@ public class MinigameManager : MonoBehaviour
     public void UpdateDisplay()
     {
         minigameText.text = "Done!";
+    }
+
+    public void UpdateExampleSprite(Sprite sprite)
+    {
+        image.sprite = sprite;
     }
 }

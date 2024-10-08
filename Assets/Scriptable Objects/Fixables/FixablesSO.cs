@@ -5,8 +5,7 @@ using UnityEngine;
 public class FixablesSO : ScriptableObject
 {
     [SerializeField] private GameObject fixablePrefab;
-    [SerializeField] private Sprite fixableSprite;
-    [SerializeField] private Transform fixableHolder;
+    [SerializeField] private Sprite exampleSprite;
 
     public GameObject GetFixablePrefab()
     {
@@ -15,11 +14,6 @@ public class FixablesSO : ScriptableObject
 
     public Sprite GetFixableSprite()
     {
-        return fixableSprite;
-    }
-
-    public Transform GetFixableHolder()
-    {
-        return fixableHolder;
+        return exampleSprite;
     }
 }

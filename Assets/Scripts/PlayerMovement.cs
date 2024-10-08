@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case "Anvil":
                     miniGame.StartGame();
-                    controlsEnabled = false;
+                    //controlsEnabled = false;
                     break;
                 case "Customer":
                     if (customerCollidingWith.isAtAnvil)
