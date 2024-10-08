@@ -4054,7 +4054,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
   minigameCanvas: {fileID: 945831925551069703, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
   mainCamera: {fileID: 519420031}
-  minigameText: {fileID: 2398850609796287987, guid: 6c3aee4f29797af47ac25a8793b67980, type: 3}
   minPositionDeviation: -1.5
   maxPositionDeviationX: 5
   maxPositionDeviationY: 1.5

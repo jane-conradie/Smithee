@@ -9,26 +9,20 @@ public class Minigame : MonoBehaviour
 {
     [SerializeField] private GameObject miniGamePrefab;
     [SerializeField] private List<FixablesSO> fixables;
-    //[SerializeField] private TMP_Text minigameText;
-    [SerializeField] private Canvas minigameCanvas;
-    [SerializeField] private Camera mainCamera;
 
-    [SerializeField] private TextMeshProUGUI minigameText;
-    
+    [Header("Piece Postitioning and Rotation")]
     // limit for how far a piece can deviate on x and y axis
     [SerializeField] private float minPositionDeviation = -1.5f;
     [SerializeField] private float maxPositionDeviationX = 5f;
     [SerializeField] private float maxPositionDeviationY = 1.5f;
-
     // limit for piece rotation
     [SerializeField] private float maxRotationDeviation = 360f;
     [SerializeField] private float minRotationDeviation = -360f;
     [SerializeField] private float singleRotationAmount = -90f;
-
     // movement speeds
     [SerializeField] private float pieceMoveSpeed = 10f;
     [SerializeField] private float pieceRotationSpeed = 260f;
-    
+
     float numberOfPiecesToRotateCorrectly;
 
     private bool isGameInProgress = false;
@@ -39,32 +33,29 @@ public class Minigame : MonoBehaviour
     GameObject fixableObject;
 
     QueueManager queueManager;
+    MinigameManager minigameManager;
+    PlayerMovement playerMovement;
 
-    private void Start() 
+    private void Start()
     {
         queueManager = QueueManager.instance;
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     public void StartGame()
     {
         if (!isGameInProgress)
         {
-            minigameText.text = "Click on the pieces until it matches the image on the left";
-
             isGameInProgress = true;
 
             // instantiate a mini game
             minigame = Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
-
-            // assign a camera to the canvas since it is in world space
-            minigameCanvas.worldCamera = mainCamera;
+            minigameManager = minigame.GetComponent<MinigameManager>();
 
             // choose a random object to fix
             FixablesSO fixableObject = GetRandomFixable();
             // split pieces apart
             SplitPieces(fixableObject);
-
-            //minigameText.SetText("ummm lliterally what is happening??");
         }
     }
 
@@ -151,7 +142,7 @@ public class Minigame : MonoBehaviour
         if (!piece.isInPosition)
         {
             StartCoroutine(MoveToOriginalPosition(pieceObject, targetPosition, piece));
-        } 
+        }
         else if (!piece.isInCorrectRotation && !piece.isRotating)
         {
             StartCoroutine(RotatePiece(pieceObject, piece));
@@ -172,6 +163,7 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
     {
+        Debug.Log("rotate piece");
         piece.isRotating = true;
 
         Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
@@ -182,7 +174,7 @@ public class Minigame : MonoBehaviour
         while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
         {
             // rotate piece to target rotation
-            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);            
+            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
             yield return null;
         }
 
@@ -196,6 +188,8 @@ public class Minigame : MonoBehaviour
             numberOfPiecesToRotateCorrectly--;
         }
 
+        Debug.Log(numberOfPiecesToRotateCorrectly);
+
         if (numberOfPiecesToRotateCorrectly == 0)
         {
             StartCoroutine(EndMiniGame());
@@ -204,15 +198,20 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator EndMiniGame()
     {
+        // end game in progress
+        isGameInProgress = false;
+
         // change text to tell user game is done
-        //minigameText.SetText("Done!");
-        // TO DO MAKE THIS WORK WITH .SET TEXT()
-        //minigameText.text = "Done!";
-        minigameText.text = "Done!";
+        minigameManager.UpdateDisplay();
 
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(3);
 
-        // end minigame, whooo hooo
+        // destory minigame, whooo hooo
+        // TO DO IF TIME - COMBINE THESE TWO SO ONLY DESTROY ONE
         Destroy(minigame);
+        Destroy(fixableObject);
+
+        // reenable the controls
+        playerMovement.ToggleControlsOnOrOff(true);
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3255633709691660353
+--- !u!1 &240911184536463338
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 515808548573329672}
-  - component: {fileID: 1414601159370796759}
-  - component: {fileID: 2398850609796287987}
+  - component: {fileID: 2977217772780598947}
+  - component: {fileID: 4456341159390044540}
+  - component: {fileID: 1095459951224062552}
   m_Layer: 5
-  m_Name: Instructions Text
+  m_Name: Instructions Text 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &515808548573329672
+--- !u!224 &2977217772780598947
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3255633709691660353}
+  m_GameObject: {fileID: 240911184536463338}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.94697, y: 0.94697, z: 0.94697}
@@ -37,21 +37,21 @@ RectTransform:
   m_AnchoredPosition: {x: 189.54517, y: 381.23206}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1414601159370796759
+--- !u!222 &4456341159390044540
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3255633709691660353}
+  m_GameObject: {fileID: 240911184536463338}
   m_CullTransparentMesh: 1
---- !u!114 &2398850609796287987
+--- !u!114 &1095459951224062552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3255633709691660353}
+  m_GameObject: {fileID: 240911184536463338}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -65,7 +65,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click on the pieces below until it matches the left image
+  m_text: 'Click on the pieces until it matches the image on the left
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3652b4827c4fcc343b81de7ec3402150, type: 2}
   m_sharedMaterial: {fileID: -4723124037416440764, guid: 3652b4827c4fcc343b81de7ec3402150, type: 2}

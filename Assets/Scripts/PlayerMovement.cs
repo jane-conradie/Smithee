@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private QueueManager queueManager;
     private Minigame miniGame;
 
+    public bool controlsEnabled = true;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -47,24 +49,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
+        if (controlsEnabled)
+        {
+            Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.deltaTime;
+            transform.Translate(movement);
+        }
     }
 
     private void Interact()
     {
-        switch (interactable)
+        if (controlsEnabled)
         {
-            // when player presses interact at cash register
-            // check the customer out
-            case "Cash Register":
-                queueManager.CheckoutCustomer();
-                break;
-            case "Anvil":
-                miniGame.StartGame();
-                break;
-            default:
-                break;
+            switch (interactable)
+            {
+                // when player presses interact at cash register
+                // check the customer out
+                case "Cash Register":
+                    queueManager.CheckoutCustomer();
+                    break;
+                case "Anvil":
+                    miniGame.StartGame();
+                    controlsEnabled = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -104,5 +113,10 @@ public class PlayerMovement : MonoBehaviour
         canvas.SetActive(showAction);
 
         interactable = showAction ? other.name : "";
+    }
+
+    public void ToggleControlsOnOrOff(bool isEnabled)
+    {
+        controlsEnabled = isEnabled;
     }
 }
