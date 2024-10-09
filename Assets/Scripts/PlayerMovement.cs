@@ -15,9 +15,10 @@ public class PlayerMovement : MonoBehaviour
     private QueueManager queueManager;
     private Minigame miniGame;
 
-
-
     Customer customerCollidingWith;
+
+    ObjectManager objectManager;
+    GameObject interactableCanvas;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         queueManager = QueueManager.instance;
         miniGame = FindObjectOfType<Minigame>();
+        objectManager = FindObjectOfType<ObjectManager>();
     }
 
     private void OnEnable()
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case "Anvil":
                     miniGame.StartGame();
-                    //controlsEnabled = false;
+                    controlsEnabled = false;
                     break;
                 case "Customer":
                     if (customerCollidingWith.isAtAnvil)
@@ -105,27 +107,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        ToggleActionPrompt(other, true);
-    }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        ToggleActionPrompt(other, false);
+        // reset interactable
+        interactable = null;
+        // hide prompt
+        interactableCanvas.SetActive(false);
+
     }
 
-    private void ToggleActionPrompt(Collider2D other, bool showAction)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        // TO DO FIX THIS DO NOT DO TRANSFORM FIND
-        // find canvas
-        GameObject canvas = other.transform.Find("Canvas").gameObject;
+        // anvil, customer, cash register
+        interactableCanvas = objectManager.GetInteractableCanvas(other);
+
+        bool showAction = true;
 
         if (other.tag == "Customer")
         {
             // get customer object
             Customer customer = other.gameObject.GetComponent<Customer>();
             customerCollidingWith = customer;
+
+            interactableCanvas = objectManager.GetCustomerCanvas(customer);
 
             // if at register or walking, do not show canvas
             if (customer.isAtRegister || !customer.isWaiting)
@@ -134,10 +139,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // set canvas active/not active
-        canvas.SetActive(showAction);
-
-        interactable = showAction ? other.tag : "";
+        interactable = other.tag;
+        interactableCanvas.SetActive(showAction);
     }
 
     public void ToggleControlsOnOrOff(bool isEnabled)

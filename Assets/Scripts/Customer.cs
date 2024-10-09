@@ -22,6 +22,8 @@ public class Customer : MonoBehaviour
     [SerializeField] private MoodSO[] moods;
     private float bonusTip = 0f;
 
+    [SerializeField] public GameObject canvas;
+
     public float moveSpeed;
 
     // pathfinding

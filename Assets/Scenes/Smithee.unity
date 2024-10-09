@@ -958,7 +958,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1380794427
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -2287,6 +2287,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926555439}
   m_CullTransparentMesh: 1
+--- !u!1 &936212424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 936212426}
+  - component: {fileID: 936212425}
+  m_Layer: 0
+  m_Name: Object Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &936212425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936212424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beed766f343ed534c94207aa618cc696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anvilCanvas: {fileID: 2098262413}
+  registerCanvas: {fileID: 1559853235}
+  customerCanvas: {fileID: 5436075360418291769, guid: 9ebef0b708c8a114f9257b8293cf94fa, type: 3}
+--- !u!4 &936212426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936212424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9985237, y: 0.5783671, z: -0.02529377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &959879672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4338,6 +4385,11 @@ Transform:
   - {fileID: 1299510347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1559853235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7236786874783434420, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
+  m_PrefabInstance: {fileID: 3840184347156223761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1584659006
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4881,53 +4933,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2470811842441990381, guid: e9a93e8a36d26bc4e9a31c3a0104b656, type: 3}
   m_PrefabInstance: {fileID: 1728760362}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1970532641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1970532643}
-  - component: {fileID: 1970532642}
-  m_Layer: 0
-  m_Name: Object Finder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1970532642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970532641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f05d28ad9f273488de49d8db74143d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusHolder: {fileID: 0}
-  statusPiece: {fileID: 0}
-  canvas: {fileID: 0}
---- !u!4 &1970532643
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970532641}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.471727, y: -0.8990861, z: -0.0069510024}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2022618218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5351,6 +5356,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2098262413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4575529611756467418, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
+  m_PrefabInstance: {fileID: 7168547755339562360}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3402669211656357655 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7323701087131374646, guid: 95980762bd1242a4d95d92ff25f9a727, type: 3}
@@ -5636,6 +5646,6 @@ SceneRoots:
   - {fileID: 209210728}
   - {fileID: 1447032479}
   - {fileID: 339452694}
-  - {fileID: 1970532643}
   - {fileID: 762174379}
   - {fileID: 37587138}
+  - {fileID: 936212426}
