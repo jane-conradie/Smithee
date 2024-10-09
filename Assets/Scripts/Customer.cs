@@ -15,7 +15,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float tipAmount = 0.20f;
     [SerializeField] private float moodScore = 100f;
     [SerializeField] private float moodIncreasePerAction = 20f;
-    [SerializeField] private float moodDecreasePerSecond = 0.05f;
+    [SerializeField] private float moodDecreasePerSecond = 0.1f;
     [SerializeField] private float baseProductCost = 10f;
     [SerializeField] private float baseServiceCost = 20f;
     [SerializeField] private SpriteRenderer moodSprite;

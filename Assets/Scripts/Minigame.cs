@@ -46,6 +46,10 @@ public class Minigame : MonoBehaviour
     {
         if (!isGameInProgress)
         {
+            // clear the original positions of the previous pieces
+            originalPositions.Clear();
+
+            // set game in progress
             isGameInProgress = true;
 
             // instantiate a mini game
@@ -186,7 +190,7 @@ public class Minigame : MonoBehaviour
 
         // if piece rotation matches correct rotatiom
         // mark as in correct rotation
-        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.01f)
+        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
         {
             piece.isInCorrectRotation = true;
             numberOfPiecesToRotateCorrectly--;

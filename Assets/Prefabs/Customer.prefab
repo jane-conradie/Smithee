@@ -226,7 +226,7 @@ MonoBehaviour:
   tipAmount: 0.2
   moodScore: 100
   moodIncreasePerAction: 20
-  moodDecreasePerSecond: 0.05
+  moodDecreasePerSecond: 0.1
   baseProductCost: 10
   baseServiceCost: 20
   moodSprite: {fileID: 5078345222731043202}

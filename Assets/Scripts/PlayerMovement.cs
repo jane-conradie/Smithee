@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private LayerMask minigameLayer;
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 6f;
 
     private PlayerControls controls;
     private Vector2 moveInput;
