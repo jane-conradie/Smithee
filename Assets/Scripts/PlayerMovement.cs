@@ -78,10 +78,9 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case "Anvil":
                     miniGame.StartGame();
-                    controlsEnabled = false;
                     break;
                 case "Customer":
-                    customerCollidingWith.HelpCustomer();
+                    customerCollidingWith.FinishHelp();
                     break;
                 default:
                     break;

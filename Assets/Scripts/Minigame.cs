@@ -62,13 +62,16 @@ public class Minigame : MonoBehaviour
 
     public void StartGame()
     {
-        if (!isGameInProgress)
+        if (!isGameInProgress && customerToServe)
         {
             // reset time left
             timeLeft = timeToComplete;
 
             // clear the original positions of the previous pieces
             originalPositions.Clear();
+
+            // disable player movement
+            playerMovement.ToggleControlsOnOrOff(true);
 
             // set game in progress
             isGameInProgress = true;
@@ -226,23 +229,23 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator EndMiniGame()
     {
+        // stop timer
+        shouldCountdown = false;
+
         // change text to tell user game is done
         minigameManager.UpdateDisplay();
 
-        // calculate bonus tip for customer
-        customerToServe.CalculateBonusTip(timeLeft);
-
         // TO DO CHANGE ALL AREAS WHERE WAIT FOR SECONDS IS HARDCODED
         yield return new WaitForSecondsRealtime(2);
+
+        // calculate bonus tip for customer
+        customerToServe.CalculateBonusTip(timeLeft);
 
         CancelGame();
     }
 
     public void CancelGame()
     {
-        // stop timer
-        shouldCountdown = false;
-
         // end game in progress
         isGameInProgress = false;
 

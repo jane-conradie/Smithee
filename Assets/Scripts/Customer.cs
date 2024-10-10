@@ -255,20 +255,6 @@ public class Customer : MonoBehaviour
         path.SetIsInUse(false);
     }
 
-    public void HelpCustomer()
-    {
-        // if at anvil, trigger minigame
-        if (isAtAnvil)
-        {
-            miniGame.StartGame();
-        }
-        else
-        {
-            // just a product purchase, finish off sale
-            FinishHelp();
-        }
-    }
-
     public void CalculateBonusTip(float timeLeft)
     {
         // TO DO REWORK THIS DUMPSTER FIRE CODE
@@ -294,11 +280,23 @@ public class Customer : MonoBehaviour
             bonusTip *= 1;
         }
 
+        // turn off at anvil status
+        isAtAnvil = false;
+
+        // clear customer to serve
+        miniGame.SetCustomerToServe(null);
+
         FinishHelp();
     }
 
     public void FinishHelp()
     {
+        // cancel if anvil game not done
+        if (isAtAnvil)
+        {
+            return;
+        }
+
         // increase mood
         IncreaseMood();
 
