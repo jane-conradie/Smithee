@@ -4,9 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create New Customer Status", fileName = "Customer Status")]
 public class CustomerStatusSO : ScriptableObject
 {
+    [SerializeField] private GameObject holder;
+    [SerializeField] private SpriteRenderer sr;
     [SerializeField] private List<Sprite> sprites;
     [SerializeField] private string sentiment;
-    [SerializeField] private string statusType;
 
     public List<Sprite> GetSprites()
     {
@@ -16,11 +17,6 @@ public class CustomerStatusSO : ScriptableObject
     public string GetSentiment()
     {
         return sentiment;
-    }
-
-    public string GetStatusType()
-    {
-        return statusType;
     }
 
     public Sprite GetRandomSprite()

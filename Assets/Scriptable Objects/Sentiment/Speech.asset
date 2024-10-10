@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 196c0b5a8e6c5d544aa3fd6ee79e28b9, type: 3}
-  m_Name: Speech Statuses
+  m_Name: Speech
   m_EditorClassIdentifier: 
+  holder: {fileID: 940962559501660224, guid: f86fe3328268fe6449baafb411739f91, type: 3}
+  sr: {fileID: 458724082175739346, guid: 5b229ec300054e94db1bc0c8ba55c4b6, type: 3}
   sprites:
-  - {fileID: -2035858251, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
+  - {fileID: -1082935795, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
+  - {fileID: 2057961347, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
   sentiment: Neutral
-  statusType: Speech

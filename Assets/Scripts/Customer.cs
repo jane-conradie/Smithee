@@ -7,11 +7,8 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     [SerializeField] private List<CustomerStatusSO> statuses;
-    [SerializeField] private float purchaseActionDuration = 3f;
-    [SerializeField] private float statusDuration = 3f;
 
-    // customer mood and tipping
-    [Header("Customer Mood and Payment")]
+    [Header("Mood and Payment")]
     [SerializeField] private float tipAmount = 0.20f;
     [SerializeField] private float moodScore = 100f;
     [SerializeField] private float moodIncreasePerAction = 20f;
@@ -25,22 +22,19 @@ public class Customer : MonoBehaviour
 
     [SerializeField] public GameObject canvas;
 
+    // movement and pathfinding
     public float moveSpeed;
-
-    // pathfinding
     public PathsSO path;
     private List<Transform> waypoints;
     public bool isWaiting = false;
     public bool isAtRegister = false;
     private bool isMoving = false;
     public int waypointIndex = 0;
-
     public bool isAtAnvil = false;
 
-
+    // dependencies
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
-
     private Minigame miniGame;
 
     private void Start()
@@ -60,7 +54,7 @@ public class Customer : MonoBehaviour
             StartCoroutine(MoveAlongPath());
         }
 
-        if (moodScore > 0 && !miniGame.isGameInProgress)
+        if (moodScore > 0 && isWaiting)
         {
             DecreaseMood();
         }
@@ -78,7 +72,8 @@ public class Customer : MonoBehaviour
         int customersInQueue = queueManager.GetTotalCustomersInQueue();
 
         Transform waypoint = waypoints[waypointIndex];
-        isAtRegister = waypoint.gameObject.tag == "Cash Register";
+        string tag = waypoint.gameObject.tag;
+        isAtRegister = tag == "Cash Register";
 
         Vector3 targetPosition = waypoint.position;
 
@@ -103,17 +98,14 @@ public class Customer : MonoBehaviour
         }
 
         // check if customer is at a product, or the anvil for service
-        string tag = waypoint.gameObject.tag;
         if (tag == "Checkpoint" || tag == "Anvil")
         {
             Buy(tag);
 
-            // wait for waiting to change
+            // wait for wait status to change
             // this will change in response to player interaction
             yield return new WaitUntil(() => !isWaiting);
         }
-
-        Debug.Log(bonusTip);
 
         if (isAtRegister)
         {
@@ -141,7 +133,7 @@ public class Customer : MonoBehaviour
 
         if (tag == "Checkpoint")
         {
-            StartCoroutine(DisplayStatus("Positive"));
+            // show thoughts of liking product
 
             // TO DO grabbing sound
 
@@ -154,27 +146,8 @@ public class Customer : MonoBehaviour
             miniGame.SetCustomerToServe(this);
             isAtAnvil = true;
         }
-    }
 
-    private IEnumerator DisplayStatus(string sentiment)
-    {
-        // get random positive sprite for status
-        Sprite sprite = GetRandomStatusSpriteBasedOnSentiment(sentiment);
-
-        // get the status holder
-        GameObject statusHolder = transform.Find("Status Holder").gameObject;
-
-        // change the sprite of the sprite rendered to the random sprite
-        GameObject statusPiece = statusHolder.transform.Find("Status Piece").gameObject;
-        SpriteRenderer sr = statusPiece.GetComponent<SpriteRenderer>();
-        sr.sprite = sprite;
-
-        // set the status holder to active
-        statusHolder.SetActive(true);
-
-        yield return new WaitForSecondsRealtime(statusDuration);
-
-        statusHolder.SetActive(false);
+        // trigger speech bubble
     }
 
     private Sprite GetRandomStatusSpriteBasedOnSentiment(string sentiment)
@@ -195,14 +168,11 @@ public class Customer : MonoBehaviour
 
     private void DecreaseMood()
     {
-        if (isWaiting)
-        {
-            moodScore -= moodDecreasePerSecond;
+        moodScore -= moodDecreasePerSecond;
 
-            if (moodScore < 0)
-            {
-                moodScore = 0;
-            }
+        if (moodScore < 0)
+        {
+            moodScore = 0;
         }
     }
 
@@ -297,10 +267,10 @@ public class Customer : MonoBehaviour
             return;
         }
 
-        // increase mood
-        IncreaseMood();
-
         // set waiting false
         isWaiting = false;
+
+        // increase mood
+        IncreaseMood();
     }
 }

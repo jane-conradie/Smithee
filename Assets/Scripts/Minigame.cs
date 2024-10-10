@@ -21,32 +21,28 @@ public class Minigame : MonoBehaviour
     // movement speeds
     [SerializeField] private float pieceMoveSpeed = 10f;
     [SerializeField] private float pieceRotationSpeed = 260f;
+    private float numberOfPiecesToRotateCorrectly;
+    private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
     [Header("Tip & Timing")]
     [SerializeField] private float countdown = 0.05f;
     [SerializeField] private float timeToComplete = 1f;
     private float timeLeft;
 
-    private float numberOfPiecesToRotateCorrectly;
-
     public bool isGameInProgress = false;
-
-    private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
     private GameObject minigame;
     private GameObject fixableObject;
 
-    private QueueManager queueManager;
+    // dependencies
     private MinigameManager minigameManager;
     private PlayerMovement playerMovement;
 
     private bool shouldCountdown = false;
-
     private Customer customerToServe;
 
     private void Start()
     {
-        queueManager = QueueManager.instance;
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 

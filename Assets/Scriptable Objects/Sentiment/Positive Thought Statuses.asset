@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196c0b5a8e6c5d544aa3fd6ee79e28b9, type: 3}
   m_Name: Positive Thought Statuses
   m_EditorClassIdentifier: 
+  holder: {fileID: 2450779586679565649, guid: 9e928117c534e4640b27ce38da1d5d3b, type: 3}
+  sr: {fileID: 8931392954467180448, guid: b9b888d5ba8630a4399741a3b28e9897, type: 3}
   sprites:
   - {fileID: -1798879932, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
   - {fileID: -1577333218, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
@@ -19,4 +21,3 @@ MonoBehaviour:
   - {fileID: 370737293, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
   - {fileID: -1780800227, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
   sentiment: Positive
-  statusType: Thought
