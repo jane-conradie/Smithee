@@ -16,10 +16,12 @@ public class PlayerMovement : MonoBehaviour
     private QueueManager queueManager;
     private Minigame miniGame;
 
-    Customer customerCollidingWith;
+    private Customer customerCollidingWith;
 
-    ObjectManager objectManager;
-    GameObject interactableCanvas;
+    private ObjectManager objectManager;
+    private GameObject interactableCanvas;
+
+    private Collider2D priorityCollider;
 
     private void Awake()
     {
@@ -112,6 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        // reset priority collider
+        priorityCollider = null;
         // hide prompt
         interactableCanvas.SetActive(false);
         // reset interactable
@@ -120,32 +124,42 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        GrabPriorityCollider(other);
+
         // anvil, customer, cash register
-        interactableCanvas = objectManager.GetInteractableCanvas(other);
+        interactableCanvas = objectManager.GetInteractableCanvas(priorityCollider);
 
         bool showAction = true;
 
-        if (other.tag == "Customer")
+        if (priorityCollider.tag == "Customer")
         {
             // get customer object
-            Customer customer = other.gameObject.GetComponent<Customer>();
+            Customer customer = priorityCollider.gameObject.GetComponent<Customer>();
             customerCollidingWith = customer;
 
-            interactableCanvas = objectManager.GetCustomerCanvas(customer);
-
             // if at register or walking, do not show canvas
-            if (customer.isAtRegister || !customer.isWaiting)
+            if (customer.isAtRegister || customer.isAtAnvil || !customer.isWaiting)
             {
                 showAction = false;
             }
         }
 
-        interactable = other.tag;
+        interactable = priorityCollider.tag;
         interactableCanvas.SetActive(showAction);
     }
 
     public void ToggleControlsOnOrOff(bool isEnabled)
     {
         controlsEnabled = isEnabled;
+    }
+
+    private void GrabPriorityCollider(Collider2D other)
+    {
+        // set collider based on hierarchy here
+        // will grab top most
+        if (!priorityCollider)
+        {
+            priorityCollider = other;
+        }
     }
 }

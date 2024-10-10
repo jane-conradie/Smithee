@@ -7,7 +7,6 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] private GameObject anvilCanvas;
     [SerializeField] private GameObject registerCanvas;
 
-
     public GameObject GetInteractableCanvas(Collider2D other)
     {
         GameObject canvas = null;
@@ -20,15 +19,15 @@ public class ObjectManager : MonoBehaviour
             case "Cash Register":
                 canvas = registerCanvas;
                 break;
+            case "Customer":
+                //  grab canvas
+                Customer customer = other.gameObject.GetComponent<Customer>();
+                canvas = customer.canvas;
+                break;
             default:
                 break;
         }
 
         return canvas;
-    }
-
-    public GameObject GetCustomerCanvas(Customer customer)
-    {
-        return customer.canvas;
     }
 }
