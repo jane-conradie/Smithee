@@ -226,7 +226,7 @@ MonoBehaviour:
   tipAmount: 0.2
   moodScore: 100
   moodIncreasePerAction: 20
-  moodDecreasePerSecond: 0.1
+  moodDecreasePerSecond: 0.05
   baseProductCost: 10
   baseServiceCost: 20
   moodSprite: {fileID: 5078345222731043202}
@@ -235,6 +235,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c615b444752ed79418313cd90252ab7b, type: 2}
   - {fileID: 11400000, guid: 5ba06c44780afbb4eb06aeccac67d110, type: 2}
   - {fileID: 11400000, guid: 7304f4fd0db0fa042a28434a4ec5ec60, type: 2}
+  bonusMultiplier: 25
   canvas: {fileID: 6763676033885095176}
   moveSpeed: 0
   path: {fileID: 0}

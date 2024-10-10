@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private LayerMask minigameLayer;
+    [SerializeField] private LayerMask uiLayer;
     [SerializeField] private float moveSpeed = 6f;
 
     private PlayerControls controls;
@@ -78,10 +79,6 @@ public class PlayerMovement : MonoBehaviour
                     controlsEnabled = false;
                     break;
                 case "Customer":
-                    if (customerCollidingWith.isAtAnvil)
-                    {
-                        controlsEnabled = false;
-                    }
                     customerCollidingWith.HelpCustomer();
                     break;
                 default:
@@ -92,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Click(InputAction.CallbackContext context)
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue(); ;
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePosition), Vector2.down, 0, minigameLayer);
 
         if (hit.collider != null)
@@ -104,17 +101,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 miniGame.FixPiece(objectHit);
             }
+
+            if (objectHit.tag == "Cancel")
+            {
+                miniGame.CancelGame();
+            }
         }
     }
 
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // reset interactable
-        interactable = null;
         // hide prompt
         interactableCanvas.SetActive(false);
-
+        // reset interactable
+        interactable = null;
     }
 
     private void OnTriggerStay2D(Collider2D other)

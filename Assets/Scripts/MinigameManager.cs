@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class MinigameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI minigameText;
-
     [SerializeField] private Image image;
+    [SerializeField] Slider timeSlider;
 
     private void Start()
     {
@@ -21,5 +21,10 @@ public class MinigameManager : MonoBehaviour
     public void UpdateExampleSprite(Sprite sprite)
     {
         image.sprite = sprite;
+    }
+
+    public void UpdateTimeSlider(float timeToComplete)
+    {
+        timeSlider.value = timeToComplete;
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -23,18 +22,27 @@ public class Minigame : MonoBehaviour
     [SerializeField] private float pieceMoveSpeed = 10f;
     [SerializeField] private float pieceRotationSpeed = 260f;
 
-    float numberOfPiecesToRotateCorrectly;
+    [Header("Tip & Timing")]
+    [SerializeField] private float countdown = 0.05f;
+    [SerializeField] private float timeToComplete = 1f;
+    private float timeLeft;
 
-    private bool isGameInProgress = false;
+    private float numberOfPiecesToRotateCorrectly;
+
+    public bool isGameInProgress = false;
 
     private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
-    GameObject minigame;
-    GameObject fixableObject;
+    private GameObject minigame;
+    private GameObject fixableObject;
 
-    QueueManager queueManager;
-    MinigameManager minigameManager;
-    PlayerMovement playerMovement;
+    private QueueManager queueManager;
+    private MinigameManager minigameManager;
+    private PlayerMovement playerMovement;
+
+    private bool shouldCountdown = false;
+
+    private Customer customerToServe;
 
     private void Start()
     {
@@ -42,10 +50,23 @@ public class Minigame : MonoBehaviour
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
+    private void Update()
+    {
+        if (shouldCountdown)
+        {
+            // countdown timer and set the value
+            timeLeft -= countdown * Time.deltaTime;
+            minigameManager.UpdateTimeSlider(timeLeft);
+        }
+    }
+
     public void StartGame()
     {
         if (!isGameInProgress)
         {
+            // reset time left
+            timeLeft = timeToComplete;
+
             // clear the original positions of the previous pieces
             originalPositions.Clear();
 
@@ -64,7 +85,8 @@ public class Minigame : MonoBehaviour
             // set example image
             minigameManager.UpdateExampleSprite(fixableObject.GetFixableSprite());
 
-            // TO DO - start timer
+            // start timer
+            shouldCountdown = true;
         }
     }
 
@@ -204,13 +226,25 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator EndMiniGame()
     {
-        // end game in progress
-        isGameInProgress = false;
-
         // change text to tell user game is done
         minigameManager.UpdateDisplay();
 
-        yield return new WaitForSecondsRealtime(3);
+        // calculate bonus tip for customer
+        customerToServe.CalculateBonusTip(timeLeft);
+
+        // TO DO CHANGE ALL AREAS WHERE WAIT FOR SECONDS IS HARDCODED
+        yield return new WaitForSecondsRealtime(2);
+
+        CancelGame();
+    }
+
+    public void CancelGame()
+    {
+        // stop timer
+        shouldCountdown = false;
+
+        // end game in progress
+        isGameInProgress = false;
 
         // destory minigame, whooo hooo
         // TO DO IF TIME - COMBINE THESE TWO SO ONLY DESTROY ONE
@@ -219,5 +253,10 @@ public class Minigame : MonoBehaviour
 
         // reenable the controls
         playerMovement.ToggleControlsOnOrOff(true);
+    }
+
+    public void SetCustomerToServe(Customer customer)
+    {
+        customerToServe = customer;
     }
 }

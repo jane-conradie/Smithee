@@ -26,9 +26,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4575529611756467418}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9040775, y: 0.9040775, z: 0.9040775}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7746016764424595526}
@@ -36,9 +36,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 865.2932, y: 486.63696}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2157844282700014641
 Canvas:
   m_ObjectHideFlags: 0
@@ -48,7 +48,7 @@ Canvas:
   m_GameObject: {fileID: 4575529611756467418}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2353276390059539680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,14 +129,14 @@ RectTransform:
   m_GameObject: {fileID: 7602878194128011115}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.00971569, y: 0.00971569, z: 0.00971569}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5760502562374620104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 509, y: 250}
+  m_AnchoredPosition: {x: -955.53, y: -537.56}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8937746403521483634
@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 8438165516767127327}
   - component: {fileID: 8265190588498933483}
   - component: {fileID: 165415416216699192}
+  - component: {fileID: 7347544165106411916}
   m_Layer: 0
   m_Name: Anvil
   m_TagString: Anvil
@@ -263,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7716088946827012160}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -982.15, y: -416.16, z: 2.7369413}
   m_LocalScale: {x: 1.1061, y: 1.1061, z: 1.1061}
   m_ConstrainProportionsScale: 0
@@ -403,3 +404,30 @@ CapsuleCollider2D:
   m_Offset: {x: 0.026104044, y: -0.010464358}
   m_Size: {x: 0.6760108, y: 0.8118775}
   m_Direction: 0
+--- !u!114 &7347544165106411916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716088946827012160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4346a5ac0ab75e43af8d0a6fc3cfd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniGamePrefab: {fileID: 2889636350346277546, guid: a6962d632435af040a9fa8ed13ac2af4, type: 3}
+  fixables:
+  - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
+  - {fileID: 11400000, guid: 7c9bfb94aa983db4e9e3f291d28dcbc4, type: 2}
+  minPositionDeviation: -1.5
+  maxPositionDeviationX: 5
+  maxPositionDeviationY: 1.5
+  maxRotationDeviation: 360
+  minRotationDeviation: -360
+  singleRotationAmount: -90
+  pieceMoveSpeed: 10
+  pieceRotationSpeed: 260
+  countdown: 0.05
+  timeToComplete: 1
+  isGameInProgress: 0

@@ -218,6 +218,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c1d9f5be192d4e44b54f2eebaa31eef, type: 2}
   - {fileID: 11400000, guid: a1f55a5eaeee65a44b5a7253f65ad2fb, type: 2}
   - {fileID: 11400000, guid: 00e483adbc9e4a54a9bfe49be75b74ed, type: 2}
+  - {fileID: 11400000, guid: c887c5138748a604aa26c8738d22d80a, type: 2}
 --- !u!4 &37587138
 Transform:
   m_ObjectHideFlags: 0
@@ -4112,40 +4113,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 181939724844483501, guid: 27ac4cbfccc0058489b0148f4d8df8cf, type: 3}
   m_PrefabInstance: {fileID: 1254865459}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1299510344 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7716088946827012160, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
-  m_PrefabInstance: {fileID: 7168547755339562360}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1299510347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5140429586206299926, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
   m_PrefabInstance: {fileID: 7168547755339562360}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1299510349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299510344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4346a5ac0ab75e43af8d0a6fc3cfd94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  miniGamePrefab: {fileID: 7105263191725633480, guid: b63c5a11cc0298b4ab5b2bb4c6bae485, type: 3}
-  fixables:
-  - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
-  - {fileID: 11400000, guid: 7c9bfb94aa983db4e9e3f291d28dcbc4, type: 2}
-  minPositionDeviation: -1.5
-  maxPositionDeviationX: 5
-  maxPositionDeviationY: 1.5
-  maxRotationDeviation: 360
-  minRotationDeviation: -360
-  singleRotationAmount: -90
-  pieceMoveSpeed: 10
-  pieceRotationSpeed: 260
 --- !u!1001 &1316394400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4759,6 +4731,9 @@ MonoBehaviour:
   minigameLayer:
     serializedVersion: 2
     m_Bits: 64
+  uiLayer:
+    serializedVersion: 2
+    m_Bits: 32
   moveSpeed: 8
   controlsEnabled: 1
 --- !u!114 &1676529348
@@ -5373,37 +5348,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1447032479}
     m_Modifications:
-    - target: {fileID: 1334540960425309092, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1334540960425309092, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 1901972350996135333, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_fontSize
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1901972350996135333, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_fontSizeMax
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1901972350996135333, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4524368233988285948, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
       propertyPath: m_Name
       value: Cash Register
-      objectReference: {fileID: 0}
-    - target: {fileID: 5409387917102982871, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7236786874783434420, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7373147177960195599, guid: 0ea9023102ff65c499f69060df50b441, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5559,10 +5506,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Anvil
       objectReference: {fileID: 0}
-    - target: {fileID: 7703864877410666634, guid: 95980762bd1242a4d95d92ff25f9a727, type: 3}
-      propertyPath: m_TagString
-      value: Anvil
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5576,10 +5519,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1447032479}
     m_Modifications:
-    - target: {fileID: 4575529611756467418, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5140429586206299926, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -982.08
@@ -5627,10 +5566,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7716088946827012160, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1299510349}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a15ad236d1d1e642895bc7f2ac833ab, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

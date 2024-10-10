@@ -9,6 +9,7 @@ TagManager:
   - Anvil
   - Fixable Piece
   - Customer
+  - Cancel
   layers:
   - Default
   - TransparentFX

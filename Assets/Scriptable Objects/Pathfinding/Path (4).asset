@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4d2b6c748cb1c488d45b6b12e06cf9, type: 3}
+  m_Name: Path (4)
+  m_EditorClassIdentifier: 
+  id: 0
+  waypoints:
+  - {fileID: 6401619577486238441, guid: 76bd0dbd9f712c94899c0c0ff7e85305, type: 3}
+  - {fileID: 8441202106815128491, guid: 5992f2f58e53eef43983e830a83b9cce, type: 3}
+  - {fileID: 6700971425226400768, guid: 846f5d8a34fd3fd46b08cd0ea9115089, type: 3}
+  - {fileID: 7323701087131374646, guid: 95980762bd1242a4d95d92ff25f9a727, type: 3}
+  - {fileID: 7743944967200013258, guid: 4986a99f0e0586046984f71442439bb5, type: 3}
+  - {fileID: 4162834458473472642, guid: 59b938bec36c2544aad7e8d5cbbaf428, type: 3}
+  - {fileID: 4335248449230994268, guid: a1ff7e1eed13af041a09be57eeb8ffd5, type: 3}
+  - {fileID: 2769899796585546848, guid: e23853778225e074780b6f93d1b4979e, type: 3}
+  - {fileID: 4735928365631523609, guid: 90a8dd3a40a256a4db49ee220e03b95d, type: 3}
+  isInUse: 1

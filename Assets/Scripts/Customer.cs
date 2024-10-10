@@ -20,6 +20,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float baseServiceCost = 20f;
     [SerializeField] private SpriteRenderer moodSprite;
     [SerializeField] private MoodSO[] moods;
+    [SerializeField] private float bonusMultiplier = 25f;
     private float bonusTip = 0f;
 
     [SerializeField] public GameObject canvas;
@@ -59,7 +60,7 @@ public class Customer : MonoBehaviour
             StartCoroutine(MoveAlongPath());
         }
 
-        if (moodScore > 0)
+        if (moodScore > 0 && !miniGame.isGameInProgress)
         {
             DecreaseMood();
         }
@@ -101,15 +102,18 @@ public class Customer : MonoBehaviour
             }
         }
 
-        if (waypoint.gameObject.tag == "Checkpoint" || waypoint.gameObject.tag == "Anvil")
+        // check if customer is at a product, or the anvil for service
+        string tag = waypoint.gameObject.tag;
+        if (tag == "Checkpoint" || tag == "Anvil")
         {
-            // trigger buying of item
-            BuyItem();
+            Buy(tag);
 
             // wait for waiting to change
             // this will change in response to player interaction
             yield return new WaitUntil(() => !isWaiting);
         }
+
+        Debug.Log(bonusTip);
 
         if (isAtRegister)
         {
@@ -130,20 +134,26 @@ public class Customer : MonoBehaviour
         isMoving = false;
     }
 
-    private void BuyItem()
+    private void Buy(string tag)
     {
-        StartCoroutine(DisplayStatus("Positive"));
-
         // set status to waiting
         isWaiting = true;
 
-        // TO DO grabbing sound
+        if (tag == "Checkpoint")
+        {
+            StartCoroutine(DisplayStatus("Positive"));
 
-        // TO DO grabbing animation
+            // TO DO grabbing sound
 
-        // TO DO pay status
+            // TO DO grabbing animation
 
-
+            // TO DO pay status
+        }
+        else
+        {
+            miniGame.SetCustomerToServe(this);
+            isAtAnvil = true;
+        }
     }
 
     private IEnumerator DisplayStatus(string sentiment)
@@ -229,6 +239,9 @@ public class Customer : MonoBehaviour
         // to calculate a final payment at checkout
         double payment = Math.Floor(tipAmount * moodScore);
 
+        // add bonus tip
+        payment += bonusTip;
+
         return (float)payment;
     }
 
@@ -249,10 +262,43 @@ public class Customer : MonoBehaviour
         {
             miniGame.StartGame();
         }
+        else
+        {
+            // just a product purchase, finish off sale
+            FinishHelp();
+        }
+    }
 
-        // TO DO add tip based on how fast finished minigame
+    public void CalculateBonusTip(float timeLeft)
+    {
+        // TO DO REWORK THIS DUMPSTER FIRE CODE
+        // 3 tiers
+        // gold, silver, bronze
 
+        // tip amount * 200
 
+        // calculate base tip for service
+        bonusTip = tipAmount * bonusMultiplier;
+
+        // calculate extra bonus based on performance
+        if (timeLeft < 0.1)
+        {
+            bonusTip *= 3;
+        }
+        else if (timeLeft < 0.66)
+        {
+            bonusTip *= 2;
+        }
+        else if (timeLeft < 0.33)
+        {
+            bonusTip *= 1;
+        }
+
+        FinishHelp();
+    }
+
+    public void FinishHelp()
+    {
         // increase mood
         IncreaseMood();
 
