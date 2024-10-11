@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] private List<CustomerStatusSO> statuses;
-
     [Header("Mood and Payment")]
     [SerializeField] private float tipAmount = 0.20f;
     [SerializeField] private float moodScore = 100f;
@@ -35,14 +33,18 @@ public class Customer : MonoBehaviour
     // dependencies
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
-    private Minigame miniGame;
+    private Minigame minigame;
+    
+    [Header("Statuses")]
+    [SerializeField] private Speech speech;
+    [SerializeField] private Thought thought;
 
     private void Start()
     {
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
-        miniGame = FindObjectOfType<Minigame>();
+        minigame = FindObjectOfType<Minigame>();
     }
 
     private void Update()
@@ -58,7 +60,6 @@ public class Customer : MonoBehaviour
         {
             DecreaseMood();
         }
-
 
         // only update if mood has changed by a lot
         UpdateMoodDisplayed();
@@ -130,10 +131,12 @@ public class Customer : MonoBehaviour
     {
         // set status to waiting
         isWaiting = true;
+        bool hasDisplayedThought = false;
 
         if (tag == "Checkpoint")
         {
             // show thoughts of liking product
+            StartCoroutine(DisplayStatus(hasDisplayedThought));
 
             // TO DO grabbing sound
 
@@ -143,18 +146,37 @@ public class Customer : MonoBehaviour
         }
         else
         {
-            miniGame.SetCustomerToServe(this);
+            hasDisplayedThought = true;
+
+            minigame.SetCustomerToServe(this);
             isAtAnvil = true;
         }
 
         // trigger speech bubble
+        StartCoroutine(DisplayStatus(hasDisplayedThought));
     }
 
-    private Sprite GetRandomStatusSpriteBasedOnSentiment(string sentiment)
+    private IEnumerator DisplayStatus(bool hasDisplayedThought)
     {
-        CustomerStatusSO status = statuses.FirstOrDefault((x) => x.GetSentiment() == sentiment);
+        // if thought display first
+        if (!hasDisplayedThought)
+        {
 
-        return status.GetRandomSprite();
+            // display thought
+            thought.gameObject.SetActive(true);
+
+            // wait for has thought displayed
+            yield return new WaitForSecondsRealtime(2);
+
+            // hide thought
+            thought.gameObject.SetActive(false);
+            hasDisplayedThought = true;
+        }
+
+        yield return new WaitUntil(() => hasDisplayedThought);
+
+        // display speech
+        speech.gameObject.SetActive(true);
     }
 
     public IEnumerator MoveForwardInQueue(Vector3 targetPosition)
@@ -168,12 +190,16 @@ public class Customer : MonoBehaviour
 
     private void DecreaseMood()
     {
-        moodScore -= moodDecreasePerSecond;
-
-        if (moodScore < 0)
+        if (!minigame.isGameInProgress)
         {
-            moodScore = 0;
+            moodScore -= moodDecreasePerSecond;
+
+            if (moodScore < 0)
+            {
+                moodScore = 0;
+            }
         }
+        
     }
 
     private void IncreaseMood()
@@ -254,7 +280,7 @@ public class Customer : MonoBehaviour
         isAtAnvil = false;
 
         // clear customer to serve
-        miniGame.SetCustomerToServe(null);
+        minigame.SetCustomerToServe(null);
 
         FinishHelp();
     }
