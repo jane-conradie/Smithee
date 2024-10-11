@@ -293,6 +293,9 @@ public class Customer : MonoBehaviour
             return;
         }
 
+        // hide speech bubble
+        speech.gameObject.SetActive(false);
+
         // set waiting false
         isWaiting = false;
 
