@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,10 +17,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lostText;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [SerializeField] private GameObject gameOverScreen;
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverScreenWin;
+    [SerializeField] private GameObject gameOverScreenLose;
     [SerializeField] private float daysToPlay = 3f;
     [SerializeField] private TextMeshProUGUI finalScoreText;
     [SerializeField] private TextMeshProUGUI daysPlayedText;
+    [SerializeField] private float totalLives = 5f;
+    [SerializeField] private TextMeshProUGUI totalLivesText;
+    [SerializeField] private Slider livesSlider;
 
     private bool isDayPassed = false;
 
@@ -32,6 +38,9 @@ public class GameManager : MonoBehaviour
 
     private float timeLeft = 0f;
     private float daysPlayed = 0f;
+
+    public bool isGameOver = false;
+    private bool hasWon = false;
 
     ScoreKeeper scoreKeeper;
     CustomerSpawner customerSpawner;
@@ -60,13 +69,17 @@ public class GameManager : MonoBehaviour
 
         // set time left 
         timeLeft = dayLengthInSeconds;
+
+        // lives
+        customersLost = totalLives;
+        UpdateLives();
     }
 
     private void Update() 
     {
         // if day still going and not in a minigame
         // pass time
-        if (!isDayPassed && !minigame.isGameInProgress)
+        if (!isDayPassed && !minigame.isGameInProgress && !isGameOver)
         {
             // pass time
             PassTime();
@@ -86,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         timeLeft -= timePassRate * Time.deltaTime;
 
-        if (timeLeft <= 0 && !isDayPassed)
+        if (timeLeft <= 0)
         {
             isDayPassed = true;
             timeText.SetText("00 : 00");
@@ -112,10 +125,9 @@ public class GameManager : MonoBehaviour
 
         if (daysPlayed >= daysToPlay)
         {
-            // show end game summary
-            objectManager.ToggleVisibility(gameOverScreen);
-            // populate fields
-            PopulateEndGame();
+            hasWon = true;
+            isGameOver = true;
+            ShowGameOver();
             return;
         }
 
@@ -138,7 +150,7 @@ public class GameManager : MonoBehaviour
         scoreKeeper.ResetScore();
 
         // reset customer stats
-        customersLost = 0;
+        customersLost = totalLives;
         customersServed = 0;
 
         // clear all objects
@@ -174,7 +186,7 @@ public class GameManager : MonoBehaviour
     {
         // populate days played
         string formattedText = $"{daysPlayed} / {daysToPlay}";
-         daysPlayedText.SetText(formattedText);
+        daysPlayedText.SetText(formattedText);
 
         // populate total score
         finalScoreText.SetText(scoreKeeper.finalScore.ToString());
@@ -186,7 +198,7 @@ public class GameManager : MonoBehaviour
         daysPlayed = 0;
 
         // hide game over
-        objectManager.ToggleVisibility(gameOverScreen);
+        objectManager.ToggleVisibility(hasWon ? gameOverScreenWin : gameOverScreenLose);
 
         // reset time
         timeLeft = dayLengthInSeconds;
@@ -195,7 +207,9 @@ public class GameManager : MonoBehaviour
         scoreKeeper.ResetAllScores();
 
         // reset customer stats
-        customersLost = 0;
+        customersLost = totalLives;
+        UpdateLives();
+
         customersServed = 0;
 
         // clear all objects
@@ -203,5 +217,45 @@ public class GameManager : MonoBehaviour
 
         // start day up again
         isDayPassed = false;
+
+        // reset game over
+        isGameOver = false;
+    }
+
+    private void UpdateLives()
+    {
+        // update text
+        string formattedText = $"{customersLost} / {totalLives}";
+        totalLivesText.SetText(formattedText);
+
+        // update slider value
+        livesSlider.value = customersLost;
+    }
+
+    public void TakeLife()
+    {
+        if (customersLost > 0)
+        {
+            customersLost--;
+        } 
+        
+        if (customersLost <= 0)
+        {
+            customersLost = 0;
+
+            isGameOver = true;
+            hasWon = false;
+            ShowGameOver();
+        }
+          
+        UpdateLives();
+    }
+
+    private void ShowGameOver()
+    {
+        // show end game summary
+        objectManager.ToggleVisibility(hasWon ? gameOverScreenWin : gameOverScreenLose);
+        // populate fields
+        PopulateEndGame();
     }
 }

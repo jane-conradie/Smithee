@@ -36,6 +36,11 @@ public class QueueManager : MonoBehaviour
         customersInQueue.Add(customer);
     }
 
+    public void RemoveCustomerFromQueue(Customer customer)
+    {
+        customersInQueue.Remove(customer);
+    }
+
     public int GetTotalCustomersInQueue()
     {
         return customersInQueue.Count;
@@ -83,7 +88,7 @@ public class QueueManager : MonoBehaviour
         }
     }
 
-    public void ClearCustomerInQueue()
+    public void ClearCustomersInQueue()
     {
         // remove customers in queue list
         customersInQueue.Clear();

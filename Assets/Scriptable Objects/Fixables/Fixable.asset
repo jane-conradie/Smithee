@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39d0ba4bb266ba41a06c8a6d7948053, type: 3}
   m_Name: Fixable
   m_EditorClassIdentifier: 
-  fixablePrefab: {fileID: 2036332977810014725, guid: 551c0ea3ce7424942a070d26edd4079b, type: 3}
+  fixablePrefab: {fileID: 4393845027954830033, guid: 15145f4ec0ae30d4f9b458e6033f9382, type: 3}
   exampleSprite: {fileID: -1074099900, guid: c6a8b8e2a01567441a39ffd2ab5cb4f8, type: 3}

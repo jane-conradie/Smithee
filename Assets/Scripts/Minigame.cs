@@ -53,6 +53,15 @@ public class Minigame : MonoBehaviour
             // countdown timer and set the value
             timeLeft -= countdown * Time.deltaTime;
             minigameManager.UpdateTimeSlider(timeLeft);
+
+            if (timeLeft <= 0)
+            {
+                // customer rage quit
+                customerToServe.RageQuit();
+
+                // end mini game
+                CancelGame();
+            }
         }
     }
 

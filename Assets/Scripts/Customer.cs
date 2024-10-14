@@ -34,6 +34,7 @@ public class Customer : MonoBehaviour
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
     private Minigame minigame;
+    private GameManager gameManager;
     
     [Header("Statuses")]
     [SerializeField] private Speech speech;
@@ -45,24 +46,28 @@ public class Customer : MonoBehaviour
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
         minigame = FindObjectOfType<Minigame>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
     {
-        // move the object if it is not moving
-        // and if the object is not at the final waypoint
-        if (!isMoving && !isWaiting)
+        if (!gameManager.isGameOver && !minigame.isGameInProgress)
         {
-            StartCoroutine(MoveAlongPath());
-        }
+            // move the object if it is not moving
+            // and if the object is not at the final waypoint
+            if (!isMoving && !isWaiting)
+            {
+                StartCoroutine(MoveAlongPath());
+            }
 
-        if (moodScore > 0 && isWaiting)
-        {
-            DecreaseMood();
-        }
+            if (moodScore > 0 && isWaiting)
+            {
+                DecreaseMood();
+            }
 
-        // only update if mood has changed by a lot
-        UpdateMoodDisplayed();
+            // only update if mood has changed by a lot
+            UpdateMoodDisplayed();
+        }
     }
 
     // moves a customer along their assigned path until destination has been reached
@@ -93,8 +98,12 @@ public class Customer : MonoBehaviour
             // moves the object until the target has been reached
             while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
             {
-                transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-                yield return null;
+                //if (!gameManager.isGameOver)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+                    yield return null;
+                }
+                //}
             }
         }
 
@@ -203,6 +212,10 @@ public class Customer : MonoBehaviour
             }
         }
         
+        if (moodScore == 0)
+        {
+            RageQuit();
+        }
     }
 
     private void IncreaseMood()
@@ -311,6 +324,30 @@ public class Customer : MonoBehaviour
         // free path used by customer
         path.SetIsInUse(false);
 
-        Destroy(gameObject);
+        if (gameObject != null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void RageQuit()
+    {
+        if (!gameManager.isGameOver)
+        {
+            // remove from queue
+            queueManager.RemoveCustomerFromQueue(this);
+
+            // remove from store
+            customerSpawner.RemoveCustomerFromStore(this);
+
+            // take life
+            gameManager.TakeLife();
+
+            // reverse path and walk out from current point
+
+            // remove customer when walked out
+            DestroySelf();
+        }
+        
     }
 }

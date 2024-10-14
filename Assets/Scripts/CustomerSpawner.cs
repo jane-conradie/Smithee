@@ -83,14 +83,16 @@ public class CustomerSpawner : MonoBehaviour
 
     public void ClearCustomers()
     {
+        Debug.Log("clearing customers");
+
         // clear customer queue list
-        queueManager.ClearCustomerInQueue();
+        queueManager.ClearCustomersInQueue();
 
         // remove each customer in store
         foreach (Customer customer in customersInStore)
         {
             customer.DestroySelf();
-        }
+        }  
 
         // clear list of customers
         customersInStore.Clear();
