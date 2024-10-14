@@ -30,4 +30,9 @@ public class ObjectManager : MonoBehaviour
 
         return canvas;
     }
+
+    public void ToggleVisibility(GameObject objectToToggle)
+    {
+        objectToToggle.SetActive(!objectToToggle.activeSelf);
+    }
 }

@@ -116,7 +116,10 @@ public class Customer : MonoBehaviour
 
         if (waypoint == waypoints.Last())
         {
-            Destroy(gameObject);
+            // clear customer in game manager
+            customerSpawner.RemoveCustomerFromStore(this);
+
+            DestroySelf();
         }
 
         if (!isWaiting)
@@ -301,5 +304,13 @@ public class Customer : MonoBehaviour
 
         // increase mood
         IncreaseMood();
+    }
+
+    public void DestroySelf()
+    {
+        // free path used by customer
+        path.SetIsInUse(false);
+
+        Destroy(gameObject);
     }
 }

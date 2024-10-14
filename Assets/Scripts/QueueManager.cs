@@ -9,6 +9,8 @@ public class QueueManager : MonoBehaviour
 
     ScoreKeeper scoreKeeper;
 
+    GameManager gameManager;
+
     private void Awake()
     {
         if (instance != null)
@@ -20,12 +22,13 @@ public class QueueManager : MonoBehaviour
             instance = this;
         }
 
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(instance);   
     }
 
     private void Start()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        gameManager = GameManager.instance;
     }
 
     public void AddCustomerToQueue(Customer customer)
@@ -42,6 +45,9 @@ public class QueueManager : MonoBehaviour
     {
         if (customersInQueue.Count > 0)
         {
+            // update customers served
+            gameManager.customersServed++;
+
             // let first customer leave
             Customer customer = customersInQueue[0];
 
@@ -75,5 +81,11 @@ public class QueueManager : MonoBehaviour
                 targetPosition = tempPosition;
             }
         }
+    }
+
+    public void ClearCustomerInQueue()
+    {
+        // remove customers in queue list
+        customersInQueue.Clear();
     }
 }

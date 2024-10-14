@@ -6,7 +6,6 @@ public class CustomerSpawner : MonoBehaviour
 {
     public static CustomerSpawner instance;
 
-    //[SerializeField] private List<PathsSO> paths;
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private float moveSpeed = 2f;
 
@@ -17,7 +16,10 @@ public class CustomerSpawner : MonoBehaviour
     private bool canSpawn = true;
     private bool isSpawning = false;
 
+    private List<Customer> customersInStore = new List<Customer>();
+
     PathManager pathManager;
+    QueueManager queueManager;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class CustomerSpawner : MonoBehaviour
     private void Start()
     {
         pathManager = PathManager.instance;
+        queueManager = QueueManager.instance;
     }
 
     private void Update()
@@ -70,8 +73,31 @@ public class CustomerSpawner : MonoBehaviour
         // set customer move speed
         customer.moveSpeed = moveSpeed;
 
+        // add instance to list of customers
+        customersInStore.Add(customer);
+
         isSpawning = false;
 
         yield return null;
+    }
+
+    public void ClearCustomers()
+    {
+        // clear customer queue list
+        queueManager.ClearCustomerInQueue();
+
+        // remove each customer in store
+        foreach (Customer customer in customersInStore)
+        {
+            customer.DestroySelf();
+        }
+
+        // clear list of customers
+        customersInStore.Clear();
+    }
+
+      public void RemoveCustomerFromStore(Customer customer)
+    {
+        customersInStore.Remove(customer);
     }
 }
