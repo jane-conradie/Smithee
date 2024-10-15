@@ -76,7 +76,7 @@ public class Minigame : MonoBehaviour
             originalPositions.Clear();
 
             // disable player movement
-            playerMovement.ToggleControlsOnOrOff(true);
+            playerMovement.ToggleControlsOnOrOff(false);
 
             // set game in progress
             isGameInProgress = true;

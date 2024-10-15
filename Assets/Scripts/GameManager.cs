@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     ScoreKeeper scoreKeeper;
     CustomerSpawner customerSpawner;
     Minigame minigame;
+    PlayerMovement playerMovement;
 
     private void Awake()
     {
@@ -66,12 +67,14 @@ public class GameManager : MonoBehaviour
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         customerSpawner = FindObjectOfType<CustomerSpawner>();
         minigame = FindObjectOfType<Minigame>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
 
         // set time left 
         timeLeft = dayLengthInSeconds;
 
         // lives
-        customersLost = totalLives;
+        livesSlider.maxValue = totalLives;
+        customersLost = 0;
         UpdateLives();
     }
 
@@ -102,14 +105,15 @@ public class GameManager : MonoBehaviour
         if (timeLeft <= 0)
         {
             isDayPassed = true;
-            timeText.SetText("00 : 00");
-
             ShowEndOfDay();
         }
     }
 
     private void ShowEndOfDay()
     {
+        // disable player movement
+        playerMovement.ToggleControlsOnOrOff(false);
+
         // increase days played
         daysPlayed++;
 
@@ -147,7 +151,7 @@ public class GameManager : MonoBehaviour
         timeLeft = dayLengthInSeconds;
 
         // reset customer stats
-        customersLost = totalLives;
+        customersLost = 0;
         customersServed = 0;
 
         // clear all objects
@@ -155,6 +159,9 @@ public class GameManager : MonoBehaviour
 
         // start day up again
         isDayPassed = false;
+
+        // enable player movement
+        playerMovement.ToggleControlsOnOrOff(true);
     }
 
     private void ClearScene()
@@ -204,7 +211,7 @@ public class GameManager : MonoBehaviour
         scoreKeeper.ResetAllScores();
 
         // reset customer stats
-        customersLost = totalLives;
+        customersLost = 0;
         UpdateLives();
 
         customersServed = 0;
@@ -217,6 +224,9 @@ public class GameManager : MonoBehaviour
 
         // reset game over
         isGameOver = false;
+
+        // enable player movement
+        playerMovement.ToggleControlsOnOrOff(true);
     }
 
     private void UpdateLives()
@@ -231,15 +241,13 @@ public class GameManager : MonoBehaviour
 
     public void TakeLife()
     {
-        if (customersLost > 0)
+        if (customersLost < totalLives)
         {
-            customersLost--;
+            customersLost++;
         }
 
-        if (customersLost <= 0)
+        if (customersLost == totalLives)
         {
-            customersLost = 0;
-
             isDayPassed = true;
             isGameOver = true;
             hasWon = false;
@@ -251,6 +259,9 @@ public class GameManager : MonoBehaviour
 
     private void ShowGameOver()
     {
+        // disable player movement
+        playerMovement.ToggleControlsOnOrOff(false);
+
         // show end game summary
         objectManager.ToggleVisibility(hasWon ? gameOverScreenWin : gameOverScreenLose);
         // populate fields

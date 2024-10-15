@@ -22,7 +22,7 @@ public class QueueManager : MonoBehaviour
             instance = this;
         }
 
-        DontDestroyOnLoad(instance);   
+        DontDestroyOnLoad(instance);
     }
 
     private void Start()
@@ -38,7 +38,12 @@ public class QueueManager : MonoBehaviour
 
     public void RemoveCustomerFromQueue(Customer customer)
     {
-        customersInQueue.Remove(customer);
+        // if specific customer is in the list
+        // remove them
+        if (customersInQueue.Contains(customer))
+        {
+            customersInQueue.Remove(customer);
+        }
     }
 
     public int GetTotalCustomersInQueue()

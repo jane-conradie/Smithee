@@ -83,7 +83,8 @@ public class CustomerSpawner : MonoBehaviour
 
     public void ClearCustomers()
     {
-        Debug.Log("clearing customers");
+        // clear paths
+        pathManager.ResetPaths();
 
         // clear customer queue list
         queueManager.ClearCustomersInQueue();
@@ -92,14 +93,17 @@ public class CustomerSpawner : MonoBehaviour
         foreach (Customer customer in customersInStore)
         {
             customer.DestroySelf();
-        }  
+        }
 
         // clear list of customers
         customersInStore.Clear();
     }
 
-      public void RemoveCustomerFromStore(Customer customer)
+    public void RemoveCustomerFromStore(Customer customer)
     {
-        customersInStore.Remove(customer);
+        if (customersInStore.Contains(customer))
+        {
+            customersInStore.Remove(customer);
+        }
     }
 }

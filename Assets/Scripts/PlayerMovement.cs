@@ -60,7 +60,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (controlsEnabled)
         {
-            Vector2 movement = new Vector2(moveInput.x, moveInput.y) * moveSpeed * Time.deltaTime;
+            // restrict movement on one axis at a time
+            float moveInputX = 0;
+            float moveInputY = 0;
+
+            // grab x first always
+            if (moveInput.x != 0)
+            {
+                moveInputX = moveInput.x;
+            }
+            else
+            {
+                moveInputY = moveInput.y;
+            }
+
+            Vector2 movement = new Vector2(moveInputX, moveInputY) * moveSpeed * Time.deltaTime;
             transform.Translate(movement);
         }
     }

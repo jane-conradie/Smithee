@@ -320,13 +320,7 @@ public class Customer : MonoBehaviour
 
     public void DestroySelf()
     {
-        // free path used by customer
-        path.SetIsInUse(false);
-
-        if (gameObject != null)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 
     public void RageQuit()
@@ -335,6 +329,9 @@ public class Customer : MonoBehaviour
         {
             // set rage quit status
             isRageQuitting = true;
+
+            // remove path
+            RemovePath();
 
             // remove from queue
             queueManager.RemoveCustomerFromQueue(this);

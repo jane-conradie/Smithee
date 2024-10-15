@@ -55,7 +55,7 @@ public class PathManager : MonoBehaviour
         return path;
     }
 
-    private void ResetPaths()
+    public void ResetPaths()
     {
         foreach (PathsSO path in paths)
         {
