@@ -35,10 +35,12 @@ public class Customer : MonoBehaviour
     public CustomerSpawner customerSpawner;
     private Minigame minigame;
     private GameManager gameManager;
-    
+
     [Header("Statuses")]
     [SerializeField] private Speech speech;
     [SerializeField] private Thought thought;
+
+    private bool isRageQuitting = false;
 
     private void Start()
     {
@@ -51,7 +53,7 @@ public class Customer : MonoBehaviour
 
     private void Update()
     {
-        if (!gameManager.isGameOver && !minigame.isGameInProgress)
+        if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
         {
             // move the object if it is not moving
             // and if the object is not at the final waypoint
@@ -202,16 +204,13 @@ public class Customer : MonoBehaviour
 
     private void DecreaseMood()
     {
-        if (!minigame.isGameInProgress)
-        {
-            moodScore -= moodDecreasePerSecond;
+        moodScore -= moodDecreasePerSecond;
 
-            if (moodScore < 0)
-            {
-                moodScore = 0;
-            }
+        if (moodScore < 0)
+        {
+            moodScore = 0;
         }
-        
+
         if (moodScore == 0)
         {
             RageQuit();
@@ -332,8 +331,11 @@ public class Customer : MonoBehaviour
 
     public void RageQuit()
     {
-        if (!gameManager.isGameOver)
+        if (!gameManager.isDayPassed && !isRageQuitting)
         {
+            // set rage quit status
+            isRageQuitting = true;
+
             // remove from queue
             queueManager.RemoveCustomerFromQueue(this);
 
@@ -348,6 +350,5 @@ public class Customer : MonoBehaviour
             // remove customer when walked out
             DestroySelf();
         }
-        
     }
 }

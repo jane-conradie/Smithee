@@ -202,33 +202,36 @@ public class Minigame : MonoBehaviour
 
     private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
     {
-        piece.isRotating = true;
-
-        Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
-
-        Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
-        Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
-
-        while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+        if (isGameInProgress)
         {
-            // rotate piece to target rotation
-            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
-            yield return null;
-        }
+            piece.isRotating = true;
 
-        piece.isRotating = false;
+            Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
 
-        // if piece rotation matches correct rotatiom
-        // mark as in correct rotation
-        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
-        {
-            piece.isInCorrectRotation = true;
-            numberOfPiecesToRotateCorrectly--;
-        }
+            Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
+            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
 
-        if (numberOfPiecesToRotateCorrectly == 0)
-        {
-            StartCoroutine(EndMiniGame());
+            while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+            {
+                // rotate piece to target rotation
+                pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            piece.isRotating = false;
+
+            // if piece rotation matches correct rotatiom
+            // mark as in correct rotation
+            if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
+            {
+                piece.isInCorrectRotation = true;
+                numberOfPiecesToRotateCorrectly--;
+            }
+
+            if (numberOfPiecesToRotateCorrectly == 0)
+            {
+                StartCoroutine(EndMiniGame());
+            }
         }
     }
 
@@ -253,6 +256,9 @@ public class Minigame : MonoBehaviour
     {
         // end game in progress
         isGameInProgress = false;
+
+        // stop countdown
+        shouldCountdown = false;
 
         // destory minigame, whooo hooo
         // TO DO IF TIME - COMBINE THESE TWO SO ONLY DESTROY ONE

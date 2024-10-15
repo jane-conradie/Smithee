@@ -44,9 +44,6 @@ public class ScoreKeeper : MonoBehaviour
 
     public void ResetScore()
     {
-        // add to final score
-        finalScore += score;
-
         // set score to 0
         score = 0;
 

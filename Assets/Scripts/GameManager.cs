@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalLivesText;
     [SerializeField] private Slider livesSlider;
 
-    private bool isDayPassed = false;
+    public bool isDayPassed = false;
 
     ObjectManager objectManager;
 
@@ -39,19 +39,19 @@ public class GameManager : MonoBehaviour
     private float timeLeft = 0f;
     private float daysPlayed = 0f;
 
-    public bool isGameOver = false;
+    private bool isGameOver = false;
     private bool hasWon = false;
 
     ScoreKeeper scoreKeeper;
     CustomerSpawner customerSpawner;
     Minigame minigame;
 
-    private void Awake() 
+    private void Awake()
     {
         if (instance != null)
         {
             Destroy(gameObject);
-        } 
+        }
         else
         {
             instance = this;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start() 
+    private void Start()
     {
         objectManager = FindObjectOfType<ObjectManager>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
@@ -75,11 +75,11 @@ public class GameManager : MonoBehaviour
         UpdateLives();
     }
 
-    private void Update() 
+    private void Update()
     {
         // if day still going and not in a minigame
         // pass time
-        if (!isDayPassed && !minigame.isGameInProgress && !isGameOver)
+        if (!isDayPassed && !minigame.isGameInProgress)
         {
             // pass time
             PassTime();
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             // format time into readable string
             TimeSpan time = TimeSpan.FromSeconds(timeLeft);
 
-            string formattedTime = string.Format("{0:D2}:{1:D2}", 
+            string formattedTime = string.Format("{0:D2}:{1:D2}",
             time.Minutes, time.Seconds);
 
             timeText.SetText(formattedTime);
@@ -145,9 +145,6 @@ public class GameManager : MonoBehaviour
 
         // reset time
         timeLeft = dayLengthInSeconds;
-
-        // reset score
-        scoreKeeper.ResetScore();
 
         // reset customer stats
         customersLost = totalLives;
@@ -237,17 +234,18 @@ public class GameManager : MonoBehaviour
         if (customersLost > 0)
         {
             customersLost--;
-        } 
-        
+        }
+
         if (customersLost <= 0)
         {
             customersLost = 0;
 
+            isDayPassed = true;
             isGameOver = true;
             hasWon = false;
             ShowGameOver();
         }
-          
+
         UpdateLives();
     }
 
