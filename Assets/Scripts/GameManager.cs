@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float daysToPlay = 3f;
     [SerializeField] private TextMeshProUGUI finalScoreText;
     [SerializeField] private TextMeshProUGUI daysPlayedText;
-    [SerializeField] private float totalLives = 5f;
+    [SerializeField] private float totalLives = 3f;
     [SerializeField] private TextMeshProUGUI totalLivesText;
     [SerializeField] private Slider livesSlider;
 

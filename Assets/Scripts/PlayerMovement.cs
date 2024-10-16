@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask uiLayer;
     [SerializeField] private float moveSpeed = 6f;
 
+    // animation
+    [SerializeField] private Animator animator;
+
     private PlayerControls controls;
     private Vector2 moveInput;
     public bool controlsEnabled = true;
@@ -22,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject interactableCanvas;
 
     private Collider2D priorityCollider;
+
+    private AnimationManager animationManager;
 
     private void Awake()
     {
@@ -39,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         queueManager = QueueManager.instance;
         miniGame = FindObjectOfType<Minigame>();
         objectManager = FindObjectOfType<ObjectManager>();
+        animationManager = GetComponent<AnimationManager>();
     }
 
     private void OnEnable()
@@ -51,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
@@ -76,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
             Vector2 movement = new Vector2(moveInputX, moveInputY) * moveSpeed * Time.deltaTime;
             transform.Translate(movement);
+
+            animationManager.TriggerMovementAnimation(movement, animator, transform);
         }
     }
 

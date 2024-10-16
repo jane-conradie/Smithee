@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Customer : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float tipAmount = 0.20f;
     [SerializeField] private float moodScore = 100f;
     [SerializeField] private float moodIncreasePerAction = 20f;
-    [SerializeField] private float moodDecreasePerSecond = 0.1f;
+    [SerializeField] private float moodDecreasePerSecond = 0.05f;
     [SerializeField] private float baseProductCost = 10f;
     [SerializeField] private float baseServiceCost = 20f;
     [SerializeField] private SpriteRenderer moodSprite;
@@ -18,7 +19,12 @@ public class Customer : MonoBehaviour
     [SerializeField] private float bonusMultiplier = 25f;
     private float bonusTip = 0f;
 
+    [SerializeField] private Animator animator;
+
     [SerializeField] public GameObject canvas;
+
+    [SerializeField] public SpriteLibraryAsset[] skins = new SpriteLibraryAsset[2];
+    [SerializeField] private SpriteLibrary spriteLibrary;
 
     // movement and pathfinding
     public float moveSpeed;
@@ -35,6 +41,7 @@ public class Customer : MonoBehaviour
     public CustomerSpawner customerSpawner;
     private Minigame minigame;
     private GameManager gameManager;
+    private AnimationManager animationManager;
 
     [Header("Statuses")]
     [SerializeField] private Speech speech;
@@ -49,6 +56,10 @@ public class Customer : MonoBehaviour
         customerSpawner = CustomerSpawner.instance;
         minigame = FindObjectOfType<Minigame>();
         gameManager = FindObjectOfType<GameManager>();
+        animationManager = GetComponent<AnimationManager>();
+
+        // change to random skin
+        ChangeSkin();
     }
 
     private void Update()
@@ -70,6 +81,15 @@ public class Customer : MonoBehaviour
             // only update if mood has changed by a lot
             UpdateMoodDisplayed();
         }
+    }
+
+    private void ChangeSkin()
+    {
+        // get random asset for skin
+        SpriteLibraryAsset newSkin = skins[UnityEngine.Random.Range(0, skins.Length)];
+
+        // assign new skin
+        spriteLibrary.spriteLibraryAsset = newSkin;
     }
 
     // moves a customer along their assigned path until destination has been reached
@@ -103,6 +123,8 @@ public class Customer : MonoBehaviour
                 //if (!gameManager.isGameOver)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+                    // trigger animation
+                    animationManager.TriggerMovementAnimation(transform.position, animator, transform);
                     yield return null;
                 }
                 //}
