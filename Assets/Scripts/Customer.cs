@@ -49,6 +49,8 @@ public class Customer : MonoBehaviour
 
     private bool isRageQuitting = false;
 
+    public bool reachedFront = false;
+
     private void Start()
     {
         waypoints = path.GetWaypoints();
@@ -61,27 +63,6 @@ public class Customer : MonoBehaviour
         // change to random skin
         ChangeSkin();
     }
-
-    // private void Update()
-    // {
-    //     if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
-    //     {
-    //         // move the object if it is not moving
-    //         // and if the object is not at the final waypoint
-    //         if (!isMoving && !isWaiting)
-    //         {
-    //             StartCoroutine(MoveAlongPath());
-    //         }
-
-    //         if (moodScore > 0 && isWaiting)
-    //         {
-    //             DecreaseMood();
-    //         }
-
-    //         // only update if mood has changed by a lot
-    //         UpdateMoodDisplayed();
-    //     }
-    // }
 
     private void FixedUpdate()
     {
@@ -124,7 +105,8 @@ public class Customer : MonoBehaviour
         string tag = waypoint.gameObject.tag;
         isAtRegister = tag == "Cash Register";
 
-        Vector3 targetPosition = waypoint.position;
+        Vector2 targetPosition = waypoint.position;
+        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
 
         customersInQueue++;
 
@@ -133,37 +115,26 @@ public class Customer : MonoBehaviour
         {
             // calculate dist if customers in queue
             // position * num customers in queue
-            targetPosition = new Vector3(waypoint.position.x, waypoint.position.y * customersInQueue, waypoint.position.z);
+            targetPosition = new Vector2(waypoint.position.x, waypoint.position.y * customersInQueue);
         }
-
-        // TO DO SET ANIMATION STATE BEFORE MOVEMENT EVEN GOES
-        // GET DIRECTION, TRIGGER STATE
-        // send in only x or y
-        Vector2 target = transform.position - targetPosition;
-        //Debug.Log(target);
-
-        if (target.x > target.y)
-        {
-            target.x = 0;
-        }
-        else
-        {
-            target.y = 0;
-        }
-
-        //animationManager.TriggerMovementAnimation(target, animator, transform);
 
         if (!isWaiting)
         {
-            // moves the object until the target has been reached
-            while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
+            Vector2 movement = targetPosition - currentPosition;
+            animationManager.TriggerMovementAnimation(movement, animator, transform, currentPosition);
+
+            while (currentPosition != targetPosition)
             {
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
-                    yield return null;
-                }
+                currentPosition = Vector2.MoveTowards(currentPosition, targetPosition, Time.deltaTime * moveSpeed);
+                transform.position = currentPosition;
+
+                yield return null;
             }
+
+            waypointIndex++;
         }
+
+        animationManager.StopMovementAnimation(animator);
 
         // check if customer is at a product, or the anvil for service
         if (tag == "Checkpoint" || tag == "Anvil")
@@ -179,6 +150,8 @@ public class Customer : MonoBehaviour
         {
             isWaiting = true;
             queueManager.AddCustomerToQueue(this);
+
+            reachedFront = true;
         }
 
         if (waypoint == waypoints.Last())
@@ -189,13 +162,7 @@ public class Customer : MonoBehaviour
             DestroySelf();
         }
 
-        if (!isWaiting)
-        {
-            waypointIndex++;
-        }
-
         isMoving = false;
-        animationManager.StopMovementAnimation(animator);
     }
 
     private void Buy(string tag)
@@ -252,11 +219,15 @@ public class Customer : MonoBehaviour
 
     public IEnumerator MoveForwardInQueue(Vector3 targetPosition)
     {
+        reachedFront = false;
+
         while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
             yield return null;
         }
+
+        reachedFront = true;
     }
 
     private void DecreaseMood()

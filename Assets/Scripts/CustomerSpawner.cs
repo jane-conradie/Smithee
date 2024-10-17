@@ -39,8 +39,6 @@ public class CustomerSpawner : MonoBehaviour
     {
         pathManager = PathManager.instance;
         queueManager = QueueManager.instance;
-
-        StartCoroutine(SpawnCustomer());
     }
 
     private void Update()
@@ -48,10 +46,10 @@ public class CustomerSpawner : MonoBehaviour
         canSpawn = pathManager.GetNumberOfAvailablePaths() > 0;
 
         // spawn customer if there is an available path to take
-        // if (canSpawn && !isSpawning)
-        // {
-        //     StartCoroutine(SpawnCustomer());
-        // }
+        if (canSpawn && !isSpawning)
+        {
+            StartCoroutine(SpawnCustomer());
+        }
     }
 
     // spawns a customer prefab every random number of seconds

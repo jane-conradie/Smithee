@@ -80,13 +80,13 @@ public class PlayerMovement : MonoBehaviour
                 moveInput.x = 0;
             }
 
-            Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
-            transform.Translate(movement);
+            Vector3 position = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
+            transform.Translate(position);
 
-            animationManager.TriggerMovementAnimation(movement, animator, transform, previousMoveInput);
+            animationManager.TriggerMovementAnimation(position, animator, transform, previousMoveInput);
 
             // set previous movement
-            previousMoveInput = movement;
+            previousMoveInput = position;
         }
     }
 

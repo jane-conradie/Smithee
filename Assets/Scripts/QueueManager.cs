@@ -55,40 +55,45 @@ public class QueueManager : MonoBehaviour
     {
         if (customersInQueue.Count > 0)
         {
-            // update customers served
-            gameManager.customersServed++;
+            // only if customer is at waypoint
 
             // let first customer leave
             Customer customer = customersInQueue[0];
 
-            // remove path tied to customer
-            customer.RemovePath();
-
-            // trigger moving
-            customer.isWaiting = false;
-            customer.waypointIndex++;
-
-            // remove first customer from queue
-            customersInQueue.RemoveAt(0);
-
-            // calculate customer payment
-            float payment = customer.GetBasePayment();
-            float tip = customer.CalculateCustomerPayment();
-
-            // add money
-            scoreKeeper.AddMoney(payment, tip);
-
-            // track front customer position
-            Vector3 targetPosition = customer.transform.position;
-
-            // trigger moving all customers forward in the queue
-            foreach (Customer cust in customersInQueue)
+            if (customer.reachedFront)
             {
-                Vector3 tempPosition = cust.transform.position;
+                // remove path tied to customer
+                customer.RemovePath();
 
-                StartCoroutine(cust.MoveForwardInQueue(targetPosition));
+                // trigger moving
+                customer.isWaiting = false;
+                customer.waypointIndex++;
 
-                targetPosition = tempPosition;
+                // remove first customer from queue
+                customersInQueue.RemoveAt(0);
+
+                // calculate customer payment
+                float payment = customer.GetBasePayment();
+                float tip = customer.CalculateCustomerPayment();
+
+                // add money
+                scoreKeeper.AddMoney(payment, tip);
+
+                // track front customer position
+                Vector3 targetPosition = customer.transform.position;
+
+                // trigger moving all customers forward in the queue
+                foreach (Customer cust in customersInQueue)
+                {
+                    Vector3 tempPosition = cust.transform.position;
+
+                    StartCoroutine(cust.MoveForwardInQueue(targetPosition));
+
+                    targetPosition = tempPosition;
+                }
+
+                // update customers served
+                gameManager.customersServed++;
             }
         }
     }

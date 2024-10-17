@@ -206,8 +206,8 @@ MonoBehaviour:
   animator: {fileID: 2957679287762030885}
   canvas: {fileID: 6763676033885095176}
   skins:
-  - {fileID: 7108339969198208228, guid: da654ab7d1d2c914c831aeb5d74cce20, type: 3}
-  - {fileID: 7108339969198208228, guid: 64a826c17d44eab41a8b3677f9a66cd7, type: 3}
+  - {fileID: 7108339969198208228, guid: 89a10302d55554b4ca88ac4cd8bf8bb0, type: 3}
+  - {fileID: 7108339969198208228, guid: 97e827aa37131af458b901c761171b24, type: 3}
   spriteLibrary: {fileID: 5484061441265653420}
   moveSpeed: 0
   path: {fileID: 0}
@@ -219,6 +219,7 @@ MonoBehaviour:
   customerSpawner: {fileID: 0}
   speech: {fileID: 5975309051749661409}
   thought: {fileID: 8332658933987876492}
+  reachedFront: 0
 --- !u!114 &7103149253617508092
 MonoBehaviour:
   m_ObjectHideFlags: 0
