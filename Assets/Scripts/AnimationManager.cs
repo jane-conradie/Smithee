@@ -3,55 +3,33 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     // control and switch animations for characters
-
-    public void TriggerMovementAnimation(Vector2 movement, Animator animator, Transform target)
+    public void TriggerMovementAnimation(Vector2 movement, Animator animator, Transform target, Vector2 previousMovement)
     {
-        // only if there was a change
-        if (movement != Vector2.zero)
+        Debug.Log(movement);
+
+        // if movement is changed, set to idle state
+        if (previousMovement != movement)
         {
-            // trigger walk animation
-            animator.SetBool("isMoving", true);
+            StopMovementAnimation(animator);
+        }
 
-            if (movement.x != 0)
-            {
-                animator.SetBool("isFacingUp", false);
-                animator.SetBool("isFacingDown", false);
+        animator.SetBool("isMoving", movement != Vector2.zero);
+        animator.SetBool("isMoving_Horizontal", movement.x != 0);
+        animator.SetFloat("Vertical", movement.y);
 
-                animator.SetBool("isFacingSide", true);
-
-                // check direction
-                if (movement.x > 0)
-                {
-                    target.localScale = new Vector3(-1, 1, 1);
-                }
-                else
-                {
-                    target.localScale = new Vector3(1, 1, 1);
-                }
-            }
-            else if (movement.y != 0)
-            {
-                animator.SetBool("isFacingSide", false);
-
-                // check direction
-                if (movement.y > 0)
-                {
-                    animator.SetBool("isFacingDown", false);
-                    // trigger up animation
-                    animator.SetBool("isFacingUp", true);
-                }
-                else
-                {
-                    animator.SetBool("isFacingUp", false);
-                    // trigger down animation
-                    animator.SetBool("isFacingDown", true);
-                }
-            }
+        if (movement.x > 0)
+        {
+            target.localScale = new Vector2(-1, 1);
         }
         else
         {
-            // trigger idle animation
-            animator.SetBool("isMoving", false);
+            target.localScale = new Vector2(1, 1);
         }
+    }
+
+    public void StopMovementAnimation(Animator animator)
+    {
+        // this will trigger idle animation state
+        animator.SetTrigger("Reset");
     }
 }

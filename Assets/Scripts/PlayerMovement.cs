@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
     private AnimationManager animationManager;
 
+    private Vector2 previousMoveInput;
+
     private void Awake()
     {
         controls = new PlayerControls();
@@ -45,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         miniGame = FindObjectOfType<Minigame>();
         objectManager = FindObjectOfType<ObjectManager>();
         animationManager = GetComponent<AnimationManager>();
+
+        previousMoveInput = moveInput;
     }
 
     private void OnEnable()
@@ -67,23 +71,22 @@ public class PlayerMovement : MonoBehaviour
         if (controlsEnabled)
         {
             // restrict movement on one axis at a time
-            float moveInputX = 0;
-            float moveInputY = 0;
-
-            // grab x first always
-            if (moveInput.x != 0)
+            if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
             {
-                moveInputX = moveInput.x;
+                moveInput.y = 0;
             }
             else
             {
-                moveInputY = moveInput.y;
+                moveInput.x = 0;
             }
 
-            Vector2 movement = new Vector2(moveInputX, moveInputY) * moveSpeed * Time.deltaTime;
+            Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
             transform.Translate(movement);
 
-            animationManager.TriggerMovementAnimation(movement, animator, transform);
+            animationManager.TriggerMovementAnimation(movement, animator, transform, previousMoveInput);
+
+            // set previous movement
+            previousMoveInput = movement;
         }
     }
 
