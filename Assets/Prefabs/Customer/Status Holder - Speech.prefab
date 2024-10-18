@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4011426408117909313
 Transform:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1380794427
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 3402497608913847671}
   customerStatus: {fileID: 11400000, guid: 3bcf76dd386aea34c8b340172ffede57, type: 2}
-  ishere: 1
 --- !u!1 &3614688068697574513
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +173,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1380794427
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1847628661, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -198,6 +197,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2057961347, guid: 1a145f68f3d4c8d4395d95c416cb2370, type: 3}
+    - target: {fileID: 458724082175739346, guid: 5b229ec300054e94db1bc0c8ba55c4b6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5961968768541422378, guid: 5b229ec300054e94db1bc0c8ba55c4b6, type: 3}
       propertyPath: m_Name
       value: Status Piece

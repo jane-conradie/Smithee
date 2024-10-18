@@ -340,6 +340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Status Holder - Speech
       objectReference: {fileID: 0}
+    - target: {fileID: 940962559501660224, guid: f86fe3328268fe6449baafb411739f91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4011426408117909313, guid: f86fe3328268fe6449baafb411739f91, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.999

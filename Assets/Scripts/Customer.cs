@@ -371,6 +371,9 @@ public class Customer : MonoBehaviour
             // set rage quit status
             isRageQuitting = true;
 
+            // hide status
+            HideStatus();
+
             StartCoroutine(WalkOutOfStore());
             yield return new WaitUntil(() => hasLeftStore);
 
@@ -414,5 +417,11 @@ public class Customer : MonoBehaviour
 
         animationManager.StopMovementAnimation(animator);
         hasLeftStore = true;
+    }
+
+    private void HideStatus()
+    {
+        thought.gameObject.SetActive(false);
+        speech.gameObject.SetActive(false);
     }
 }
