@@ -154,6 +154,9 @@ public class GameManager : MonoBehaviour
         customersLost = 0;
         customersServed = 0;
 
+        // update slider
+        UpdateLives();
+
         // clear all objects
         ClearScene();
 

@@ -1972,7 +1972,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1380794427
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -7009,7 +7009,7 @@ MonoBehaviour:
   scoreText: {fileID: 725828581}
   gameOverScreenWin: {fileID: 1068973337}
   gameOverScreenLose: {fileID: 1078496515}
-  daysToPlay: 3
+  daysToPlay: 2
   finalScoreText: {fileID: 65382182}
   daysPlayedText: {fileID: 287710514}
   totalLives: 5
