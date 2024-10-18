@@ -10,6 +10,9 @@ TagManager:
   - Fixable Piece
   - Customer
   - Cancel
+  - Red Zone
+  - Orange Zone
+  - Indicator
   layers:
   - Default
   - TransparentFX

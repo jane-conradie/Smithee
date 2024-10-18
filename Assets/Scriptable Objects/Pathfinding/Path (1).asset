@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   waypoints:
-  - {fileID: 6401619577486238441, guid: 76bd0dbd9f712c94899c0c0ff7e85305, type: 3}
+  - {fileID: 3859182457026340996, guid: eb3a74cdc4b1f4b489278a98ae481eb1, type: 3}
   - {fileID: 8441202106815128491, guid: 5992f2f58e53eef43983e830a83b9cce, type: 3}
   - {fileID: 2470811842441990381, guid: e9a93e8a36d26bc4e9a31c3a0104b656, type: 3}
   - {fileID: 795838481072524887, guid: bffa1a2236b51c340b5c9cf39609c881, type: 3}
@@ -26,5 +26,5 @@ MonoBehaviour:
   - {fileID: 4162834458473472642, guid: 59b938bec36c2544aad7e8d5cbbaf428, type: 3}
   - {fileID: 4335248449230994268, guid: a1ff7e1eed13af041a09be57eeb8ffd5, type: 3}
   - {fileID: 2769899796585546848, guid: e23853778225e074780b6f93d1b4979e, type: 3}
-  - {fileID: 4735928365631523609, guid: 90a8dd3a40a256a4db49ee220e03b95d, type: 3}
-  isInUse: 0
+  - {fileID: 5467632049662656076, guid: 8258379782aad2d49af41b1cffceb9b8, type: 3}
+  isInUse: 1

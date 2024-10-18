@@ -57,7 +57,7 @@ public class Minigame : MonoBehaviour
             if (timeLeft <= 0)
             {
                 // customer rage quit
-                customerToServe.RageQuit();
+                StartCoroutine(customerToServe.RageQuit());
 
                 // end mini game
                 CancelGame();

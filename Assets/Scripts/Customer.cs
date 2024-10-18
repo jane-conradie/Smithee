@@ -46,10 +46,14 @@ public class Customer : MonoBehaviour
     [Header("Statuses")]
     [SerializeField] private Speech speech;
     [SerializeField] private Thought thought;
+    private bool shouldShowStatus = false;
 
     private bool isRageQuitting = false;
+    private bool hasLeftStore = false;
 
     public bool reachedFront = false;
+
+    private Vector2 currentPosition;
 
     private void Start()
     {
@@ -106,7 +110,7 @@ public class Customer : MonoBehaviour
         isAtRegister = tag == "Cash Register";
 
         Vector2 targetPosition = waypoint.position;
-        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+        currentPosition = new Vector2(transform.position.x, transform.position.y);
 
         customersInQueue++;
 
@@ -169,6 +173,7 @@ public class Customer : MonoBehaviour
     {
         // set status to waiting
         isWaiting = true;
+        shouldShowStatus = true;
         bool hasDisplayedThought = false;
 
         if (tag == "Checkpoint")
@@ -196,25 +201,30 @@ public class Customer : MonoBehaviour
 
     private IEnumerator DisplayStatus(bool hasDisplayedThought)
     {
-        // if thought display first
-        if (!hasDisplayedThought)
+        if (shouldShowStatus)
         {
+                // if thought display first
+            if (!hasDisplayedThought)
+            {
+                // display thought
+                thought.gameObject.SetActive(true);
 
-            // display thought
-            thought.gameObject.SetActive(true);
+                // wait for has thought displayed
+                yield return new WaitForSecondsRealtime(2);
 
-            // wait for has thought displayed
-            yield return new WaitForSecondsRealtime(2);
+                // hide thought
+                thought.gameObject.SetActive(false);
+                hasDisplayedThought = true;
+            }
 
-            // hide thought
-            thought.gameObject.SetActive(false);
-            hasDisplayedThought = true;
+            yield return new WaitUntil(() => hasDisplayedThought);
+
+            if (shouldShowStatus)
+            {
+                // display speech
+                speech.gameObject.SetActive(true);
+            }
         }
-
-        yield return new WaitUntil(() => hasDisplayedThought);
-
-        // display speech
-        speech.gameObject.SetActive(true);
     }
 
     public IEnumerator MoveForwardInQueue(Vector3 targetPosition)
@@ -241,7 +251,7 @@ public class Customer : MonoBehaviour
 
         if (moodScore == 0)
         {
-            RageQuit();
+            StartCoroutine(RageQuit());
         }
     }
 
@@ -336,7 +346,10 @@ public class Customer : MonoBehaviour
             return;
         }
 
-        // hide speech bubble
+        shouldShowStatus = false;
+
+        // hide statuses
+        thought.gameObject.SetActive(false);
         speech.gameObject.SetActive(false);
 
         // set waiting false
@@ -351,12 +364,15 @@ public class Customer : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void RageQuit()
+    public IEnumerator RageQuit()
     {
         if (!gameManager.isDayPassed && !isRageQuitting)
         {
             // set rage quit status
             isRageQuitting = true;
+
+            StartCoroutine(WalkOutOfStore());
+            yield return new WaitUntil(() => hasLeftStore);
 
             // remove path
             RemovePath();
@@ -370,10 +386,33 @@ public class Customer : MonoBehaviour
             // take life
             gameManager.TakeLife();
 
-            // reverse path and walk out from current point
-
-            // remove customer when walked out
             DestroySelf();
         }
+    }
+
+    private IEnumerator WalkOutOfStore()
+    {
+        // set previous waypoint as the target position
+        for (int i = waypointIndex - 1; i >= 0 ; i--)
+        {
+            Transform waypoint = waypoints[i];
+            // target is last one
+            Vector2 targetPosition = new Vector2(waypoint.position.x, waypoint.position.y);
+
+            Vector2 movement = targetPosition - currentPosition;
+            animationManager.TriggerMovementAnimation(movement, animator, transform, currentPosition);
+
+            // follow path back
+            while (currentPosition != targetPosition)
+            {
+                currentPosition = Vector2.MoveTowards(currentPosition, targetPosition, Time.deltaTime * moveSpeed);
+                transform.position = currentPosition;
+
+                yield return null;
+            }
+        }
+
+        animationManager.StopMovementAnimation(animator);
+        hasLeftStore = true;
     }
 }
