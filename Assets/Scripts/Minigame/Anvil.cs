@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Anvil : MonoBehaviour
 {
@@ -24,78 +25,25 @@ public class Anvil : MonoBehaviour
     private float numberOfPiecesToRotateCorrectly;
     private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
-    [Header("Tip & Timing")]
-    [SerializeField] private float countdown = 0.05f;
-    [SerializeField] private float timeToComplete = 1f;
-    private float timeLeft;
-
-    public bool isGameInProgress = false;
-
-    private GameObject minigame;
     private GameObject fixableObject;
-
-    // dependencies
-    private MinigameManager minigameManager;
-    private PlayerMovement playerMovement;
-
-    private bool shouldCountdown = false;
-    private Customer customerToServe;
-
-    private void Start()
-    {
-        playerMovement = FindObjectOfType<PlayerMovement>();
-    }
-
-    private void Update()
-    {
-        if (shouldCountdown)
-        {
-            // countdown timer and set the value
-            timeLeft -= countdown * Time.deltaTime;
-            //minigameManager.UpdateTimeSlider(timeLeft);
-
-            if (timeLeft <= 0)
-            {
-                // customer rage quit
-                StartCoroutine(customerToServe.RageQuit());
-
-                // end mini game
-                CancelGame();
-            }
-        }
-    }
 
     public void StartGame()
     {
-        if (!isGameInProgress && customerToServe)
-        {
-            // reset time left
-            timeLeft = timeToComplete;
+        // clear the original positions of the previous pieces
+        originalPositions.Clear();
 
-            // clear the original positions of the previous pieces
-            originalPositions.Clear();
+        // instantiate a mini game
+        Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
 
-            // disable player movement
-            playerMovement.ToggleControlsOnOrOff(false);
+        // choose a random object to fix
+        FixablesSO fixableObject = GetRandomFixable();
+        // split pieces apart
+        SplitPieces(fixableObject);
 
-            // set game in progress
-            isGameInProgress = true;
+        // set example image
+        //minigameManager.UpdateExampleSprite(fixableObject.GetFixableSprite());
 
-            // instantiate a mini game
-            minigame = Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
-            minigameManager = minigame.GetComponent<MinigameManager>();
-
-            // choose a random object to fix
-            FixablesSO fixableObject = GetRandomFixable();
-            // split pieces apart
-            SplitPieces(fixableObject);
-
-            // set example image
-            //minigameManager.UpdateExampleSprite(fixableObject.GetFixableSprite());
-
-            // start timer
-            shouldCountdown = true;
-        }
+        //example.sprite = fixableObject.GetFixableSprite();
     }
 
     private FixablesSO GetRandomFixable()
@@ -202,75 +150,36 @@ public class Anvil : MonoBehaviour
 
     private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
     {
-        if (isGameInProgress)
+        // if (isGameInProgress)
+        // {
+        piece.isRotating = true;
+
+        Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
+
+        Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
+
+        while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
         {
-            piece.isRotating = true;
-
-            Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
-
-            Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
-            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
-
-            while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
-            {
-                // rotate piece to target rotation
-                pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
-                yield return null;
-            }
-
-            piece.isRotating = false;
-
-            // if piece rotation matches correct rotatiom
-            // mark as in correct rotation
-            if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
-            {
-                piece.isInCorrectRotation = true;
-                numberOfPiecesToRotateCorrectly--;
-            }
-
-            if (numberOfPiecesToRotateCorrectly == 0)
-            {
-                StartCoroutine(EndMiniGame());
-            }
+            // rotate piece to target rotation
+            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
+            yield return null;
         }
-    }
 
-    private IEnumerator EndMiniGame()
-    {
-        // stop timer
-        shouldCountdown = false;
+        piece.isRotating = false;
 
-        // change text to tell user game is done
-        //minigameManager.UpdateDisplay();
+        // if piece rotation matches correct rotatiom
+        // mark as in correct rotation
+        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
+        {
+            piece.isInCorrectRotation = true;
+            numberOfPiecesToRotateCorrectly--;
+        }
 
-        // TO DO CHANGE ALL AREAS WHERE WAIT FOR SECONDS IS HARDCODED
-        yield return new WaitForSecondsRealtime(2);
-
-        // calculate bonus tip for customer
-        customerToServe.CalculateBonusTip(timeLeft);
-
-        CancelGame();
-    }
-
-    public void CancelGame()
-    {
-        // end game in progress
-        isGameInProgress = false;
-
-        // stop countdown
-        shouldCountdown = false;
-
-        // destory minigame, whooo hooo
-        // TO DO IF TIME - COMBINE THESE TWO SO ONLY DESTROY ONE
-        Destroy(minigame);
-        Destroy(fixableObject);
-
-        // reenable the controls
-        playerMovement.ToggleControlsOnOrOff(true);
-    }
-
-    public void SetCustomerToServe(Customer customer)
-    {
-        customerToServe = customer;
+        // if (numberOfPiecesToRotateCorrectly == 0)
+        // {
+        //     StartCoroutine(EndMiniGame());
+        // }
+        //}
     }
 }

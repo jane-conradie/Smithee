@@ -70,7 +70,7 @@ public class Customer : MonoBehaviour
 
     private void FixedUpdate()
     {
-         if (!gameManager.isDayPassed && !isRageQuitting)
+        if (!gameManager.isDayPassed && !isRageQuitting)
         //if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
         {
             // move the object if it is not moving
@@ -192,7 +192,7 @@ public class Customer : MonoBehaviour
         {
             hasDisplayedThought = true;
 
-            minigame.SetCustomerToServe(this);
+            //minigame.SetCustomerToServe(this);
             isAtAnvil = true;
         }
 
@@ -204,7 +204,7 @@ public class Customer : MonoBehaviour
     {
         if (shouldShowStatus)
         {
-                // if thought display first
+            // if thought display first
             if (!hasDisplayedThought)
             {
                 // display thought
@@ -334,7 +334,7 @@ public class Customer : MonoBehaviour
         isAtAnvil = false;
 
         // clear customer to serve
-        minigame.SetCustomerToServe(null);
+        //minigame.SetCustomerToServe(null);
 
         FinishHelp();
     }
@@ -397,7 +397,7 @@ public class Customer : MonoBehaviour
     private IEnumerator WalkOutOfStore()
     {
         // set previous waypoint as the target position
-        for (int i = waypointIndex - 1; i >= 0 ; i--)
+        for (int i = waypointIndex - 1; i >= 0; i--)
         {
             Transform waypoint = waypoints[i];
             // target is last one

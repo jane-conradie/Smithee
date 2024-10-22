@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 6f;
 
     [SerializeField] private Rigidbody2D rb;
+
+    [SerializeField] private string[] interactables = new string[3];
 
     // animation
     [SerializeField] private Animator animator;
@@ -21,18 +24,17 @@ public class PlayerMovement : MonoBehaviour
     private QueueManager queueManager;
     private Anvil miniGame;
 
-    private Customer customerCollidingWith;
-
     private ObjectManager objectManager;
     private GameObject interactableCanvas;
 
-    private Collider2D priorityCollider;
+    private Collider2D collidingObject;
 
     private AnimationManager animationManager;
 
     private Vector2 previousMoveInput;
 
-
+    private MinigameManager minigameManager;
+    private GameObject minigameObject;
 
     private void Awake()
     {
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         queueManager = QueueManager.instance;
-        miniGame = FindObjectOfType<Anvil>();
+        minigameManager = FindObjectOfType<MinigameManager>();
         objectManager = FindObjectOfType<ObjectManager>();
         animationManager = GetComponent<AnimationManager>();
 
@@ -112,10 +114,9 @@ public class PlayerMovement : MonoBehaviour
                     queueManager.CheckoutCustomer();
                     break;
                 case "Anvil":
-                    miniGame.StartGame();
-                    break;
-                case "Customer":
-                    customerCollidingWith.FinishHelp();
+                case "Sellable":
+                    // check which customer to serve
+                    minigameManager.StartMinigame(interactable, collidingObject.gameObject);
                     break;
                 default:
                     break;
@@ -131,17 +132,30 @@ public class PlayerMovement : MonoBehaviour
         if (hit.collider != null)
         {
             GameObject objectHit = hit.collider.gameObject;
+            minigameManager.HandleClick(objectHit);
+        }
+    }
 
-            // if clicked on a piece, trigger putting it back together
-            if (objectHit.tag == "Fixable Piece")
-            {
-                miniGame.FixPiece(objectHit);
-            }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!interactables.Contains(other.gameObject.tag))
+        {
+            return;
+        }
 
-            if (objectHit.tag == "Cancel")
-            {
-                miniGame.CancelGame();
-            }
+        // if collided with an interactable
+        // save that interactable
+        collidingObject = other;
+
+        // anvil, sellable, cash register
+        interactableCanvas = objectManager.GetInteractableCanvas(collidingObject);
+
+        if (interactableCanvas)
+        {
+            bool showAction = true;
+
+            interactable = collidingObject.tag;
+            interactableCanvas.SetActive(showAction);
         }
     }
 
@@ -149,57 +163,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (interactableCanvas)
         {
-            // reset priority collider
-        priorityCollider = null;
-        // hide prompt
-        interactableCanvas.SetActive(false);
-        // reset interactable
-        interactable = null;
-        }
-        
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        GrabPriorityCollider(other);
-
-        // anvil, sellable, cash register
-        interactableCanvas = objectManager.GetInteractableCanvas(priorityCollider);
-
-        if (interactableCanvas)
-        {
-             bool showAction = true;
-
-        if (priorityCollider.tag == "Customer")
-        {
-            // get customer object
-            Customer customer = priorityCollider.gameObject.GetComponent<Customer>();
-            customerCollidingWith = customer;
-
-            // if at register or walking, do not show canvas
-            if (customer.isAtRegister || customer.isAtAnvil || !customer.isWaiting)
-            {
-                showAction = false;
-            }
-        }
-
-        interactable = priorityCollider.tag;
-        interactableCanvas.SetActive(showAction);
+            // reset colliding object
+            collidingObject = null;
+            // hide prompt
+            interactableCanvas.SetActive(false);
+            // reset interactable
+            interactable = null;
         }
     }
 
     public void ToggleControlsOnOrOff(bool isEnabled)
     {
         controlsEnabled = isEnabled;
-    }
-
-    private void GrabPriorityCollider(Collider2D other)
-    {
-        // set collider based on hierarchy here
-        // will grab top most
-        if (!priorityCollider)
-        {
-            priorityCollider = other;
-        }
     }
 }

@@ -1,27 +1,32 @@
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Sales : MonoBehaviour
 {
-    [SerializeField] private GameObject indicator;
-    [SerializeField] private float indicatorMoveSpeed;
-    // grab indicator
+    [SerializeField] private GameObject minigamePrefab;
+    [SerializeField] private Indicator indicator;
 
-    // move back and forth
-
-    // track when user clicks
-
-    private void Update()
+    public void StartSale()
     {
-        // move indicator
-
+        // instantiate sales minigame prefab
+        Instantiate(minigamePrefab, minigamePrefab.transform.position, quaternion.identity);
     }
 
-    private void MoveIndicator()
+    public void SellItem()
     {
-        Transform objectTransform = indicator.transform;
+        // stop indicator
+        indicator.ToggleMoveIndicator();
 
-        objectTransform.Translate(Vector3.right * indicatorMoveSpeed * Time.deltaTime);
+        // check where indicator is
+        Debug.Log(indicator.zone);
+
+        // timer = bonus tip
+
+        // zone = influences mood
+
+
+        // check time left to get bonus
     }
-
 
 }

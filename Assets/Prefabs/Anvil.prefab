@@ -249,7 +249,6 @@ GameObject:
   - component: {fileID: 8265190588498933483}
   - component: {fileID: 165415416216699192}
   - component: {fileID: 2125891775495821535}
-  - component: {fileID: 5170717636150254830}
   m_Layer: 0
   m_Name: Anvil
   m_TagString: Anvil
@@ -417,8 +416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afb2c93d70588743b0d7216e3c0c37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGamePrefab: {fileID: 0}
-  fixables: []
+  miniGamePrefab: {fileID: 2889636350346277546, guid: a6962d632435af040a9fa8ed13ac2af4, type: 3}
+  fixables:
+  - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
+  - {fileID: 11400000, guid: 7c9bfb94aa983db4e9e3f291d28dcbc4, type: 2}
+  example: {fileID: 7833106391251503928, guid: 6cebd498500129c4a9550a1c25d4b3f4, type: 3}
   minPositionDeviation: -1.5
   maxPositionDeviationX: 5
   maxPositionDeviationY: 1.5
@@ -427,19 +429,3 @@ MonoBehaviour:
   singleRotationAmount: -90
   pieceMoveSpeed: 10
   pieceRotationSpeed: 260
-  countdown: 0.05
-  timeToComplete: 1
-  isGameInProgress: 0
---- !u!114 &5170717636150254830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7716088946827012160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98e69ea7bf444ea459a0f9cab4def42a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectCollider: {fileID: 0}

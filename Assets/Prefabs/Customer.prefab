@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 2957679287762030885}
   - component: {fileID: 5484061441265653420}
   - component: {fileID: 3179473286789393375}
+  - component: {fileID: 248163422401058681}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Customer
@@ -328,6 +329,33 @@ MonoBehaviour:
   m_labelHash: 2.7765928e-14
   m_SpriteKey: 0
   m_SpriteHash: 598137583
+--- !u!50 &248163422401058681
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167123408693933315}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1190980333578848784
 PrefabInstance:
   m_ObjectHideFlags: 0

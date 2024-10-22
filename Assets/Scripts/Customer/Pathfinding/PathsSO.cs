@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create New Path", fileName = "Path")]
 public class PathsSO : ScriptableObject
 {
-    [SerializeField] private float id;
     [SerializeField] private List<Transform> waypoints;
     [SerializeField] public bool isInUse;
 

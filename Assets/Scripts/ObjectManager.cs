@@ -26,6 +26,10 @@ public class ObjectManager : MonoBehaviour
                 //canvas = customer.canvas;
                 canvas = sellCanvas;
                 break;
+            case "Sellable":
+                Canvas canvasObject = other.gameObject.GetComponentInChildren<Canvas>(true);
+                canvas = canvasObject.gameObject;
+                break;
             default:
                 break;
         }

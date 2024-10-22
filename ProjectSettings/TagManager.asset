@@ -13,6 +13,9 @@ TagManager:
   - Red Zone
   - Orange Zone
   - Indicator
+  - Sellable
+  - Indicator Holder
+  - Green Zone
   layers:
   - Default
   - TransparentFX

@@ -121,11 +121,11 @@ public class GameManager : MonoBehaviour
         scoreKeeper.UpdateFinalScore();
 
         // if in minigame - close and hide
-        if (minigame.isGameInProgress)
-        {
-            // destroy it
-            minigame.CancelGame();
-        }
+        // if (minigame.isGameInProgress)
+        // {
+        //     // destroy it
+        //     minigame.CancelGame();
+        // }
 
         if (daysPlayed >= daysToPlay)
         {

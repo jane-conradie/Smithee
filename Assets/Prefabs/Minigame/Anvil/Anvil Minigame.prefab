@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2889636350346277546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1303028554146854706}
+  - component: {fileID: 1015773468581319837}
+  m_Layer: 5
+  m_Name: Anvil Minigame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1303028554146854706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889636350346277546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.11, y: -5.46, z: -0.0005248}
+  m_LocalScale: {x: 0.00008805211, y: 0.00008805211, z: 0.00008805211}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1805781818228266422}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1015773468581319837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889636350346277546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e69ea7bf444ea459a0f9cab4def42a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countdown: 0.05
+  timeToComplete: 1
+  isGameInProgress: 0
+--- !u!1001 &2378155582443760495
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1303028554146854706}
+    m_Modifications:
+    - target: {fileID: 2609115257623512103, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609115257623512103, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609115257623512103, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.860891
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 97544.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 54325.742
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922446594032477636, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922446594032477636, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6699796051810361813, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_Name
+      value: Anvil Canvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+--- !u!224 &1805781818228266422 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4039600334316175065, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+  m_PrefabInstance: {fileID: 2378155582443760495}
+  m_PrefabAsset: {fileID: 0}
