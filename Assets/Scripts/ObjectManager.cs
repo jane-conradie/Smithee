@@ -6,6 +6,7 @@ public class ObjectManager : MonoBehaviour
     [Header("Interactables")]
     [SerializeField] private GameObject anvilCanvas;
     [SerializeField] private GameObject registerCanvas;
+    [SerializeField] private GameObject sellCanvas;
 
     public GameObject GetInteractableCanvas(Collider2D other)
     {
@@ -21,8 +22,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "Customer":
                 //  grab canvas
-                Customer customer = other.gameObject.GetComponent<Customer>();
-                canvas = customer.canvas;
+                //Customer customer = other.gameObject.GetComponent<Customer>();
+                //canvas = customer.canvas;
+                canvas = sellCanvas;
                 break;
             default:
                 break;

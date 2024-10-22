@@ -39,7 +39,7 @@ public class Customer : MonoBehaviour
     // dependencies
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
-    private Minigame minigame;
+    private Anvil minigame;
     private GameManager gameManager;
     private AnimationManager animationManager;
 
@@ -60,7 +60,7 @@ public class Customer : MonoBehaviour
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
-        minigame = FindObjectOfType<Minigame>();
+        minigame = FindObjectOfType<Anvil>();
         gameManager = FindObjectOfType<GameManager>();
         animationManager = GetComponent<AnimationManager>();
 
@@ -70,7 +70,8 @@ public class Customer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
+         if (!gameManager.isDayPassed && !isRageQuitting)
+        //if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
         {
             // move the object if it is not moving
             // and if the object is not at the final waypoint

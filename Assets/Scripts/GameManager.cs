@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     ScoreKeeper scoreKeeper;
     CustomerSpawner customerSpawner;
-    Minigame minigame;
+    Anvil minigame;
     PlayerMovement playerMovement;
 
     private void Awake()
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManager>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         customerSpawner = FindObjectOfType<CustomerSpawner>();
-        minigame = FindObjectOfType<Minigame>();
+        minigame = FindObjectOfType<Anvil>();
         playerMovement = FindObjectOfType<PlayerMovement>();
 
         // set time left 
@@ -82,19 +82,19 @@ public class GameManager : MonoBehaviour
     {
         // if day still going and not in a minigame
         // pass time
-        if (!isDayPassed && !minigame.isGameInProgress)
-        {
-            // pass time
-            PassTime();
+        // if (!isDayPassed && !minigame.isGameInProgress)
+        // {
+        //     // pass time
+        //     PassTime();
 
-            // format time into readable string
-            TimeSpan time = TimeSpan.FromSeconds(timeLeft);
+        //     // format time into readable string
+        //     TimeSpan time = TimeSpan.FromSeconds(timeLeft);
 
-            string formattedTime = string.Format("{0:D2}:{1:D2}",
-            time.Minutes, time.Seconds);
+        //     string formattedTime = string.Format("{0:D2}:{1:D2}",
+        //     time.Minutes, time.Seconds);
 
-            timeText.SetText(formattedTime);
-        }
+        //     timeText.SetText(formattedTime);
+        // }
     }
 
     // trigger end of day state

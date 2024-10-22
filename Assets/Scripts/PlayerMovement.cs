@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask uiLayer;
     [SerializeField] private float moveSpeed = 6f;
 
+    [SerializeField] private Rigidbody2D rb;
+
     // animation
     [SerializeField] private Animator animator;
 
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private string interactable;
 
     private QueueManager queueManager;
-    private Minigame miniGame;
+    private Anvil miniGame;
 
     private Customer customerCollidingWith;
 
@@ -29,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private AnimationManager animationManager;
 
     private Vector2 previousMoveInput;
+
+
 
     private void Awake()
     {
@@ -44,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         queueManager = QueueManager.instance;
-        miniGame = FindObjectOfType<Minigame>();
+        miniGame = FindObjectOfType<Anvil>();
         objectManager = FindObjectOfType<ObjectManager>();
         animationManager = GetComponent<AnimationManager>();
 
@@ -80,8 +84,14 @@ public class PlayerMovement : MonoBehaviour
                 moveInput.x = 0;
             }
 
-            Vector3 position = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
-            transform.Translate(position);
+            //Vector3 position = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
+            Vector2 position = new Vector3(moveInput.x, moveInput.y);
+            //transform.Translate(position);
+            //rb.MovePosition(position);
+
+            //Vector2 moveDirection = new Vector2(moveInput, 0);
+
+            rb.MovePosition(rb.position + position * moveSpeed * Time.deltaTime);
 
             animationManager.TriggerMovementAnimation(position, animator, transform, previousMoveInput);
 
@@ -137,22 +147,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // reset priority collider
+        if (interactableCanvas)
+        {
+            // reset priority collider
         priorityCollider = null;
         // hide prompt
         interactableCanvas.SetActive(false);
         // reset interactable
         interactable = null;
+        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
         GrabPriorityCollider(other);
 
-        // anvil, customer, cash register
+        // anvil, sellable, cash register
         interactableCanvas = objectManager.GetInteractableCanvas(priorityCollider);
 
-        bool showAction = true;
+        if (interactableCanvas)
+        {
+             bool showAction = true;
 
         if (priorityCollider.tag == "Customer")
         {
@@ -169,6 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
         interactable = priorityCollider.tag;
         interactableCanvas.SetActive(showAction);
+        }
     }
 
     public void ToggleControlsOnOrOff(bool isEnabled)
