@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private string interactable;
 
     private QueueManager queueManager;
-    private Anvil miniGame;
 
     private ObjectManager objectManager;
     private GameObject interactableCanvas;
@@ -34,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 previousMoveInput;
 
     private MinigameManager minigameManager;
-    private GameObject minigameObject;
 
     private void Awake()
     {

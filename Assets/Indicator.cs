@@ -6,22 +6,22 @@ public class Indicator : MonoBehaviour
     [SerializeField] private float indicatorMoveSpeed;
 
     private float moveDirection = 1;
-    private bool shouldMove = true;
+    public bool shouldMove = true;
     public string zone;
 
     private void Update()
     {
         // move indicator
-        MoveIndicator();
+        if (shouldMove)
+        {
+            MoveIndicator();
+        }
     }
 
     private void MoveIndicator()
     {
-        if (shouldMove)
-        {
-            // move indicator
-            transform.Translate(new Vector3(moveDirection, 0, 0) * indicatorMoveSpeed * Time.deltaTime);
-        }
+        // move indicator
+        transform.Translate(new Vector3(moveDirection, 0, 0) * indicatorMoveSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D other)

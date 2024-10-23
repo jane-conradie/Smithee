@@ -6,6 +6,7 @@ public class PathsSO : ScriptableObject
 {
     [SerializeField] private List<Transform> waypoints;
     [SerializeField] public bool isInUse;
+    [SerializeField] public float interactable;
 
     public List<Transform> GetWaypoints()
     {

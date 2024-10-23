@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4d2b6c748cb1c488d45b6b12e06cf9, type: 3}
   m_Name: Path (2)
   m_EditorClassIdentifier: 
-  id: 0
   waypoints:
   - {fileID: 3859182457026340996, guid: eb3a74cdc4b1f4b489278a98ae481eb1, type: 3}
   - {fileID: 8441202106815128491, guid: 5992f2f58e53eef43983e830a83b9cce, type: 3}
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {fileID: 2769899796585546848, guid: e23853778225e074780b6f93d1b4979e, type: 3}
   - {fileID: 5467632049662656076, guid: 8258379782aad2d49af41b1cffceb9b8, type: 3}
   isInUse: 1
+  interactable: 2

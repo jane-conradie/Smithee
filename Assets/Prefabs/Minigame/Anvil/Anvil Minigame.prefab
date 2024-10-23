@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e69ea7bf444ea459a0f9cab4def42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigame: {fileID: 0}
   countdown: 0.05
   timeToComplete: 1
+  timeSlider: {fileID: 0}
+  minigameText: {fileID: 0}
   isGameInProgress: 0
 --- !u!1001 &2378155582443760495
 PrefabInstance:
@@ -156,9 +159,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6101484030935854601, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6699796051810361813, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
       propertyPath: m_Name
       value: Anvil Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198104137523873505, guid: 76089d920c6c5c04bb097234d698c92b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

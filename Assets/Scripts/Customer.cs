@@ -10,7 +10,6 @@ public class Customer : MonoBehaviour
     [Header("Mood and Payment")]
     [SerializeField] private float tipAmount = 0.20f;
     [SerializeField] private float moodScore = 100f;
-    [SerializeField] private float moodIncreasePerAction = 20f;
     [SerializeField] private float moodDecreasePerSecond = 0.05f;
     [SerializeField] private float baseProductCost = 10f;
     [SerializeField] private float baseServiceCost = 20f;
@@ -39,7 +38,7 @@ public class Customer : MonoBehaviour
     // dependencies
     public QueueManager queueManager;
     public CustomerSpawner customerSpawner;
-    private Anvil minigame;
+    private MinigameManager minigameManager;
     private GameManager gameManager;
     private AnimationManager animationManager;
 
@@ -60,7 +59,7 @@ public class Customer : MonoBehaviour
         waypoints = path.GetWaypoints();
         queueManager = QueueManager.instance;
         customerSpawner = CustomerSpawner.instance;
-        minigame = FindObjectOfType<Anvil>();
+        minigameManager = MinigameManager.instance;
         gameManager = FindObjectOfType<GameManager>();
         animationManager = GetComponent<AnimationManager>();
 
@@ -70,8 +69,7 @@ public class Customer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!gameManager.isDayPassed && !isRageQuitting)
-        //if (!gameManager.isDayPassed && !minigame.isGameInProgress && !isRageQuitting)
+        if (!gameManager.isDayPassed && !minigameManager.isGameInProgress && !isRageQuitting)
         {
             // move the object if it is not moving
             // and if the object is not at the final waypoint
@@ -191,8 +189,6 @@ public class Customer : MonoBehaviour
         else
         {
             hasDisplayedThought = true;
-
-            //minigame.SetCustomerToServe(this);
             isAtAnvil = true;
         }
 
@@ -253,16 +249,6 @@ public class Customer : MonoBehaviour
         if (moodScore == 0)
         {
             StartCoroutine(RageQuit());
-        }
-    }
-
-    private void IncreaseMood()
-    {
-        moodScore += moodIncreasePerAction;
-
-        if (moodScore > 100)
-        {
-            moodScore = 100;
         }
     }
 
@@ -333,9 +319,6 @@ public class Customer : MonoBehaviour
         // turn off at anvil status
         isAtAnvil = false;
 
-        // clear customer to serve
-        //minigame.SetCustomerToServe(null);
-
         FinishHelp();
     }
 
@@ -357,7 +340,7 @@ public class Customer : MonoBehaviour
         isWaiting = false;
 
         // increase mood
-        IncreaseMood();
+        //IncreaseMood();
     }
 
     public void DestroySelf()
@@ -396,6 +379,8 @@ public class Customer : MonoBehaviour
 
     private IEnumerator WalkOutOfStore()
     {
+        Debug.Log("leave store");
+
         // set previous waypoint as the target position
         for (int i = waypointIndex - 1; i >= 0; i--)
         {
@@ -424,5 +409,10 @@ public class Customer : MonoBehaviour
     {
         thought.gameObject.SetActive(false);
         speech.gameObject.SetActive(false);
+    }
+
+    public void ChangeMood(float modifier)
+    {
+        moodScore = Mathf.Clamp(moodScore *= modifier, 0, 100);
     }
 }

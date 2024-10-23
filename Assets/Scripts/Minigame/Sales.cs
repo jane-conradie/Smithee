@@ -1,32 +1,66 @@
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Sales : MonoBehaviour
 {
-    [SerializeField] private GameObject minigamePrefab;
-    [SerializeField] private Indicator indicator;
+    [SerializeField] private GameObject salesPrefab;
+    [SerializeField] public TextMeshProUGUI salesText;
+
+    [Header("Zone Mood Modifiers")]
+    [SerializeField] private float greenZoneModifier = 1.5f;
+    [SerializeField] private float orangeZoneModifier = 1f;
+    [SerializeField] private float redZoneModifier = 0f;
+
+    private MinigameManager minigameManager;
+    private Indicator indicator;
+
+    private void Start()
+    {
+        minigameManager = MinigameManager.instance;
+    }
 
     public void StartSale()
     {
         // instantiate sales minigame prefab
-        Instantiate(minigamePrefab, minigamePrefab.transform.position, quaternion.identity);
+        GameObject sale = Instantiate(salesPrefab, salesPrefab.transform.position, quaternion.identity);
+        // reference the indicator
+        indicator = sale.GetComponentInChildren<Indicator>();
+
+        // set minigame text to right text
+        minigameManager.minigame = sale;
+        minigameManager.UpdateText(salesText.text);
     }
 
-    public void SellItem()
+    public void SellItem(Customer customer)
     {
         // stop indicator
         indicator.ToggleMoveIndicator();
 
         // check where indicator is
-        Debug.Log(indicator.zone);
+        string zone = indicator.zone;
+        float moodModifier = 1f;
 
-        // timer = bonus tip
+        // change customer mood based on zone landed on
+        switch (zone)
+        {
+            case "Green Zone":
+                moodModifier = greenZoneModifier;
+                break;
+            case "Orange Zone":
+                moodModifier = orangeZoneModifier;
+                break;
+            case "Red Zone":
+                moodModifier = redZoneModifier;
+                break;
+            default:
+                break;
+        }
 
-        // zone = influences mood
+        customer.ChangeMood(moodModifier);
 
-
-        // check time left to get bonus
+        // end game
+        StartCoroutine(minigameManager.EndMiniGame());
     }
 
 }
