@@ -176,7 +176,7 @@ public class MinigameManager : MonoBehaviour
         // if clicked on a piece, trigger putting it back together
         if (clickedObject.tag == "Fixable Piece")
         {
-            //miniGame.FixPiece(objectHit);
+            anvil.FixPiece(clickedObject);
         }
     }
 }

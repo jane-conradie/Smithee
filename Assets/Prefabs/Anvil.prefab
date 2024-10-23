@@ -417,7 +417,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afb2c93d70588743b0d7216e3c0c37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniGamePrefab: {fileID: 2889636350346277546, guid: a6962d632435af040a9fa8ed13ac2af4, type: 3}
+  anvilPrefab: {fileID: 782281782912743239, guid: 102ddc787de2a0a48a285b59091bf7f5, type: 3}
+  exampleImage: {fileID: 7504103651558637457, guid: 3759535e5037da34ea011fb298ae3017, type: 3}
+  fixableHolder: {fileID: 2198412912339324310, guid: 04b92ba3c6a897445a80617a6c2732d0, type: 3}
   fixables:
   - {fileID: 11400000, guid: 9745ccbc01449624bad9cd1ffbffae8a, type: 2}
   - {fileID: 11400000, guid: 7c9bfb94aa983db4e9e3f291d28dcbc4, type: 2}
@@ -441,4 +443,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ab1bcff924b514ab3f1d8da04970d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   customer: {fileID: 0}

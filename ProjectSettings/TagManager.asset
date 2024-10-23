@@ -16,6 +16,7 @@ TagManager:
   - Sellable
   - Indicator Holder
   - Green Zone
+  - Example Image
   layers:
   - Default
   - TransparentFX

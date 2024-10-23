@@ -27,12 +27,12 @@ public class Interactable : MonoBehaviour
     {
         if (other.gameObject.tag == "Customer")
         {
-            if (customer && customer.path.interactable == id)
+            Customer tempCustomer = other.gameObject.GetComponent<Customer>();
+            // check if the one that left is actually this iteractables customer
+            if (tempCustomer == customer)
             {
                 customer = null;
             }
-
-            Debug.Log("customer left, should now be null and is: " + customer);
         }
     }
 }

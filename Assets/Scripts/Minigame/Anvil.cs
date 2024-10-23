@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Anvil : MonoBehaviour
 {
-    [SerializeField] private GameObject miniGamePrefab;
+    [SerializeField] private GameObject anvilPrefab;
     [SerializeField] private List<FixablesSO> fixables;
 
     [Header("Piece Postitioning and Rotation")]
@@ -25,7 +26,15 @@ public class Anvil : MonoBehaviour
     private float numberOfPiecesToRotateCorrectly;
     private List<(float id, Vector2 originalPosition)> originalPositions = new List<(float id, Vector2 originalPosition)>();
 
+    private GameObject anvil;
     private GameObject fixableObject;
+
+    private MinigameManager minigameManager;
+
+    private void Start()
+    {
+        minigameManager = MinigameManager.instance;
+    }
 
     public void StartGame()
     {
@@ -33,7 +42,9 @@ public class Anvil : MonoBehaviour
         originalPositions.Clear();
 
         // instantiate a mini game
-        Instantiate(miniGamePrefab, miniGamePrefab.transform.position, quaternion.identity);
+        anvil = Instantiate(anvilPrefab, anvilPrefab.transform.position, quaternion.identity);
+
+        minigameManager.minigame = anvil;
 
         // choose a random object to fix
         FixablesSO fixableObject = GetRandomFixable();
@@ -41,9 +52,14 @@ public class Anvil : MonoBehaviour
         SplitPieces(fixableObject);
 
         // set example image
-        //minigameManager.UpdateExampleSprite(fixableObject.GetFixableSprite());
+        UpdateExampleSprite(fixableObject);
+    }
 
-        //example.sprite = fixableObject.GetFixableSprite();
+    private void UpdateExampleSprite(FixablesSO fixable)
+    {
+        // TO DO BETTER WAY TO DO THIS
+        Image example = GameObject.FindGameObjectWithTag("Example Image").GetComponent<Image>();
+        example.sprite = fixable.GetFixableSprite();
     }
 
     private FixablesSO GetRandomFixable()
@@ -150,36 +166,36 @@ public class Anvil : MonoBehaviour
 
     private IEnumerator RotatePiece(GameObject pieceObject, Piece piece)
     {
-        // if (isGameInProgress)
-        // {
-        piece.isRotating = true;
-
-        Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
-
-        Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
-        Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
-
-        while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+        if (minigameManager.isGameInProgress)
         {
-            // rotate piece to target rotation
-            pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
-            yield return null;
+            piece.isRotating = true;
+
+            Quaternion correctRotation = Quaternion.Euler(0, 0, 0);
+
+            Quaternion rotationToDo = Quaternion.Euler(0, 0, singleRotationAmount);
+            Quaternion targetRotation = Quaternion.Euler(0, 0, rotationToDo.eulerAngles.z + pieceObject.transform.rotation.eulerAngles.z);
+
+            while (Quaternion.Angle(pieceObject.transform.rotation, targetRotation) > 0.01f)
+            {
+                // rotate piece to target rotation
+                pieceObject.transform.rotation = Quaternion.RotateTowards(pieceObject.transform.rotation, targetRotation, pieceRotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            piece.isRotating = false;
+
+            // if piece rotation matches correct rotatiom
+            // mark as in correct rotation
+            if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
+            {
+                piece.isInCorrectRotation = true;
+                numberOfPiecesToRotateCorrectly--;
+            }
+
+            if (numberOfPiecesToRotateCorrectly == 0)
+            {
+                StartCoroutine(minigameManager.EndMiniGame());
+            }
         }
-
-        piece.isRotating = false;
-
-        // if piece rotation matches correct rotatiom
-        // mark as in correct rotation
-        if (Quaternion.Angle(pieceObject.transform.rotation, correctRotation) <= 0.5f)
-        {
-            piece.isInCorrectRotation = true;
-            numberOfPiecesToRotateCorrectly--;
-        }
-
-        // if (numberOfPiecesToRotateCorrectly == 0)
-        // {
-        //     StartCoroutine(EndMiniGame());
-        // }
-        //}
     }
 }
