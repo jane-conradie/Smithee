@@ -138,6 +138,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6215964851814614116, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0019457334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215964851814614116, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.014150789
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215964851814614116, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.014150789
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215964851814614116, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.414
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215964851814614116, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.027
+      objectReference: {fileID: 0}
     - target: {fileID: 7802818080475415436, guid: 4343afcf8b70b9c4e9f0ab12a34ba00a, type: 3}
       propertyPath: m_Name
       value: Minigame Canvas
