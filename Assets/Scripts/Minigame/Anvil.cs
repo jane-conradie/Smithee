@@ -45,6 +45,8 @@ public class Anvil : MonoBehaviour
         anvil = Instantiate(anvilPrefab, anvilPrefab.transform.position, quaternion.identity);
 
         minigameManager.minigame = anvil;
+        // make parent of minigame the base game
+        anvil.transform.SetParent(minigameManager.minigameBase.transform);
 
         // choose a random object to fix
         FixablesSO fixableObject = GetRandomFixable();
@@ -74,6 +76,9 @@ public class Anvil : MonoBehaviour
 
         // instantiate a fixable object
         fixableObject = Instantiate(fixableToBreak, fixableToBreak.transform.position, quaternion.identity);
+
+        // make anvil minigame parent
+        fixableObject.transform.SetParent(anvil.transform);
 
         // get all the children objects, exclude the parent
         Transform[] pieces = fixableObject.GetComponentsInChildren<Transform>(true)

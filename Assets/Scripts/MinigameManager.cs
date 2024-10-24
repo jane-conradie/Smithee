@@ -30,7 +30,7 @@ public class MinigameManager : MonoBehaviour
     private PlayerMovement playerMovement;
 
     public GameObject minigame;
-    private GameObject minigameBase;
+    public GameObject minigameBase;
 
     private void Awake()
     {
@@ -140,7 +140,6 @@ public class MinigameManager : MonoBehaviour
         shouldCountdown = false;
 
         // destory minigame, whooo hooo
-        Destroy(minigame);
         Destroy(minigameBase);
 
         // reenable the controls

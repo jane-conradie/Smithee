@@ -161,6 +161,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (interactableCanvas)
         {
+            if (other.gameObject.tag == "Customer")
+            {
+                return;
+            }
             // reset colliding object
             collidingObject = null;
             // hide prompt

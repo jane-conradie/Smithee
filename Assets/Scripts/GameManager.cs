@@ -44,8 +44,9 @@ public class GameManager : MonoBehaviour
 
     ScoreKeeper scoreKeeper;
     CustomerSpawner customerSpawner;
-    Anvil minigame;
     PlayerMovement playerMovement;
+
+    MinigameManager minigameManager;
 
     private void Awake()
     {
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         objectManager = FindObjectOfType<ObjectManager>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         customerSpawner = FindObjectOfType<CustomerSpawner>();
-        minigame = FindObjectOfType<Anvil>();
+        minigameManager = MinigameManager.instance;
         playerMovement = FindObjectOfType<PlayerMovement>();
 
         // set time left 
@@ -82,19 +83,19 @@ public class GameManager : MonoBehaviour
     {
         // if day still going and not in a minigame
         // pass time
-        // if (!isDayPassed && !minigame.isGameInProgress)
-        // {
-        //     // pass time
-        //     PassTime();
+        if (!isDayPassed && !minigameManager.isGameInProgress)
+        {
+            // pass time
+            PassTime();
 
-        //     // format time into readable string
-        //     TimeSpan time = TimeSpan.FromSeconds(timeLeft);
+            // format time into readable string
+            TimeSpan time = TimeSpan.FromSeconds(timeLeft);
 
-        //     string formattedTime = string.Format("{0:D2}:{1:D2}",
-        //     time.Minutes, time.Seconds);
+            string formattedTime = string.Format("{0:D2}:{1:D2}",
+            time.Minutes, time.Seconds);
 
-        //     timeText.SetText(formattedTime);
-        // }
+            timeText.SetText(formattedTime);
+        }
     }
 
     // trigger end of day state
@@ -121,11 +122,11 @@ public class GameManager : MonoBehaviour
         scoreKeeper.UpdateFinalScore();
 
         // if in minigame - close and hide
-        // if (minigame.isGameInProgress)
-        // {
-        //     // destroy it
-        //     minigame.CancelGame();
-        // }
+        if (minigameManager.isGameInProgress)
+        {
+            // destroy it
+            minigameManager.CancelGame();
+        }
 
         if (daysPlayed >= daysToPlay)
         {

@@ -7,7 +7,6 @@ public class Interactable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(customer);
         if (!customer)
         {
             // grab customer that has been collided with

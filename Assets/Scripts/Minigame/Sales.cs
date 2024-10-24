@@ -27,6 +27,9 @@ public class Sales : MonoBehaviour
         // reference the indicator
         indicator = sale.GetComponentInChildren<Indicator>();
 
+        // make parent of minigame the base game
+        sale.transform.SetParent(minigameManager.minigameBase.transform);
+
         // set minigame text to right text
         minigameManager.minigame = sale;
         minigameManager.UpdateText(salesText.text);

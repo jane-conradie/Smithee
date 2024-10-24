@@ -134,7 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf72531ab988af24e894c7c75ba58c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorMoveSpeed: 5
+  minMoveSpeed: 2
+  maxMoveSpeed: 10
+  speedDeclineRatePerFrame: 1.5
+  xPositionDeviation: 5
+  shouldMove: 1
+  zone: 
 --- !u!50 &4621654650020637944
 Rigidbody2D:
   serializedVersion: 4

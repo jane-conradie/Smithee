@@ -2455,6 +2455,7 @@ MonoBehaviour:
   timeLeft: 0
   isGameInProgress: 0
   minigame: {fileID: 0}
+  minigameBase: {fileID: 0}
 --- !u!1 &652177610
 GameObject:
   m_ObjectHideFlags: 0
@@ -8186,6 +8187,7 @@ MonoBehaviour:
   timeLeft: 0
   isGameInProgress: 0
   minigame: {fileID: 0}
+  minigameBase: {fileID: 0}
 --- !u!1 &1380768864
 GameObject:
   m_ObjectHideFlags: 0
